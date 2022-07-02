@@ -1,0 +1,133 @@
+#: import content_present util.content_present
+#: import num_unique_locations util.num_unique_locations
+
+<Dashboard>:
+    name: "dashboard"
+    
+############################## TOP MENU ##############################
+    GridLayout:
+        cols: 9
+        
+        pos_hint: {"top": 1}
+        size_hint_y: 0.1
+        padding: 0, 50, 0, 25
+            
+        canvas.before:
+            Color:
+                rgb: root.rgb(237, 151, 76)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+            Color:
+                rgb: root.rgb(13, 59, 102)
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+        Widget:
+        GridLayout:
+            cols: 1
+            
+            Button:
+                background_normal: ''
+                background_color: root.rgb(237, 151, 76)
+                background_down:''
+                on_release:
+                    root.manager.transition.direction = 'up'
+                    app.root.current = 'main menu'
+                #text: "Menu"
+                Image:
+                    source: 'assets/menubar.png'
+                    y: self.parent.y + self.parent.height - self.parent.size[1]
+                    x: self.parent.x
+                     
+                    size: self.parent.size
+                    allow_stretch: True
+                
+
+        Widget:
+
+        Widget:
+
+        Label:
+            text: "Dashboard"
+            font_size: 50
+            font_name: 'Roboto-Bold'
+            color: root.rgb(13, 59, 102)
+        Widget:
+
+        Widget:
+        GridLayout:
+            cols: 1
+
+
+            Button:
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                background_down: ''
+                on_release:
+                    root.manager.transition.direction = 'up'
+                    app.root.current = 'add meeting'
+                    
+                Image:
+                    source: 'assets/new_appt.png'
+                    y: self.parent.y + self.parent.height - self.parent.size[1]
+                    x: self.parent.x
+                     
+                    size: self.parent.size
+                    allow_stretch: True
+        Widget:
+############################## SECONDARY MENU ##############################
+    GridLayout:
+        cols: 7
+        pos_hint: {"top": .9}
+        size_hint_y: 0.05
+        padding: 50, 0, 50, 0
+            
+        
+            
+        canvas.before:
+            Color:
+                rgb: root.rgb(245, 213, 95)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+            Color:
+                rgb: root.rgb(13, 59, 102)
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+
+        Widget:
+        Label:
+            Image:
+                source: 'assets/calendar.png'
+                y: self.parent.y + self.parent.height - (self.parent.size[1]*.85)
+                center_x: self.parent.center_x
+
+                size: self.parent.size[0]*.7, self.parent.size[1]*.7
+                allow_stretch: True
+        Label:
+            color: root.rgb(13, 59, 102) if content_present() == 0 else root.rgb(250, 87, 55)
+            text: str(content_present())
+        Widget:
+
+        Label:
+            Image:
+                source: 'assets/map.png'
+                y: self.parent.y + self.parent.height - (self.parent.size[1]*.85)
+                center_x: self.parent.center_x
+
+                size: self.parent.size[0]*.7, self.parent.size[1]*.7
+                allow_stretch: True
+             
+        Label:
+            color: root.rgb(13, 59, 102) if num_unique_locations() == 0 else root.rgb(250, 87, 55)
+            text: str(num_unique_locations())
+        Widget:
+
+
+
+            
+    BottomMenu:
+        pos_hint: {"bottom": 1}
+        size_hint_y: .1
