@@ -26,7 +26,7 @@ brew link libtool
 2. Start compilation
 
 ```
-toolcahin build python3 kivy
+toolchain build python3 kivy
 ```
 
 3. Create the Xcode Project
