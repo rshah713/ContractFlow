@@ -11,6 +11,7 @@ from edit_meeting import EditMeeting
 from main_menu import MainMenu
 from manage_locations import ManageLocation
 from stats import Statistics
+from login import Login
 
 
 class WindowManager(ScreenManager):

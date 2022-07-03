@@ -1,0 +1,46 @@
+<Login>:
+    name: 'login'
+
+        
+    ############################## TOP MENU ##############################
+    GridLayout:
+        cols: 1
+        
+        pos_hint: {"top": 1}
+        size_hint_y: 0.3
+        padding: 0, 50, 0, 25
+        
+        Label:
+            text: "Login"
+            font_size: 100
+            font_name: 'Roboto-Bold'
+            color: root.rgb(13, 59, 102)
+                
+    BoxLayout:
+        orientation: 'vertical'
+            
+        pos_hint: {"top": .7}
+        size_hint_y: .7
+        
+        Label:
+            text: "Email:"
+            color: root.rgb(13, 59, 102)
+            font_size: 20
+            size_hint: (.1, .05)
+            pos_hint: {'x': 0.15}
+        TextInput:
+            size_hint: (.7, .1)
+            pos_hint: {'x': 0.15}
+            multiline: False
+            text: "@hotmail.com"
+            background_color: root.rgb(13, 59, 102, alpha=0)
+            foreground_color: root.rgb(250, 87, 55)
+                
+            canvas.after:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+                
+        Button:
