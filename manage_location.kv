@@ -1,0 +1,201 @@
+<ManageLocation>:
+    name: 'manage location'
+        
+        
+    ############################## TOP MENU ##############################
+    GridLayout:
+        cols: 1
+        
+        pos_hint: {"top": 1}
+        size_hint_y: 0.1
+        padding: 0, 50, 0, 25
+            
+        canvas.before:
+            Color:
+                rgb: root.rgb(237, 151, 76)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+            Color:
+                rgb: root.rgb(13, 59, 102)
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+        
+        Label:
+            text: "Manage Locations"
+            font_size: 45
+            font_name: 'Roboto-Bold'
+            color: root.rgb(13, 59, 102)
+                
+    ############################## Content ##############################
+    
+    GridLayout:
+        cols: 1
+        pos_hint: {'top' : 0.85}
+            # .8 comes from top menu taking .1 width + .1 we want gap
+        size_hint_y: 0.75
+            # .7 comes from top menu (.1) + bottom menu (.1) + small gap under top menu (.1)
+        row_default_height: self.size[1] * .1
+        row_force_default: True
+            
+            
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                ### we put it here to only highlight every other row
+                ### if we slap it at the top then the whole gridlayout lights up
+                ### key is using y val's of `self` which is button mixing w/ `root` for grid
+                text: 'Location Name:'
+                font_name: 'Roboto-Bold'
+                font_size: 25
+                color: root.rgb(13, 59, 102)
+                size_hint: (.3, 1)
+
+                canvas.before:
+                    Color: 
+                        rgb: root.rgb(245, 213, 95)
+                    Rectangle:
+                        size: root.size[0], self.size[1]
+                        pos: 0, self.pos[1]
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 2
+                        rectangle: 0, self.y, root.width, self.height
+
+            TextInput:
+                size_hint: (.7, 1)
+                multiline: False
+                text: "Meadow Lakes"
+                background_color: root.rgb(13, 59, 102)
+                foreground_color: root.rgb(250, 87, 55)
+                    
+                    
+        Widget: # blank row
+   
+        BoxLayout:
+            orientation: 'horizontal'
+            
+            Label:
+                text: 'Address:'
+                size_hint: (.3, 1)
+                font_name: 'Roboto-Bold'
+                font_size: 25
+                color: root.rgb(13, 59, 102)
+
+                canvas.before:
+                    Color: 
+                        rgb: root.rgb(245, 213, 95)
+                    Rectangle:
+                        size: root.size[0], self.size[1]
+                        pos: 0, self.pos[1]
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 2
+                        rectangle: 0, self.y, root.width, self.height
+                            
+            TextInput:
+                size_hint: (.7, 1)
+                multiline: True
+                text: "300 Meadow Lakes East Windsor NJ 08520"
+                font_size: 25
+                background_color: root.rgb(13, 59, 102)
+                foreground_color: root.rgb(250, 87, 55)
+                            
+                            
+        Widget: # blank row
+   
+        BoxLayout:
+            orientation: 'horizontal'
+            
+            Label:
+                text: 'Hourly Wage:'
+                size_hint: (.3, 1)
+                font_name: 'Roboto-Bold'
+                font_size: 25
+                color: root.rgb(13, 59, 102)
+
+                canvas.before:
+                    Color: 
+                        rgb: root.rgb(245, 213, 95)
+                    Rectangle:
+                        size: root.size[0], self.size[1]
+                        pos: 0, self.pos[1]
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 2
+                        rectangle: 0, self.y, root.width, self.height
+                            
+            TextInput:
+                size_hint: (.7, 1)
+                multiline: True
+                input_filter: 'float'
+                text: "00.00"
+                font_size: 25
+                background_color: root.rgb(13, 59, 102)
+                foreground_color: root.rgb(250, 87, 55)
+        
+        Widget: #blank row
+            
+        ############################## NEXT/PREV BUTTONS ##############################
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 25, 0
+                
+            Button:
+                text: 'prev'
+                size_hint_x: 0.3
+                pos_hint: {'left': 0}
+                    
+            Widget:
+                    
+            Button:
+                text: 'next'
+                size_hint_x: 0.3
+                pos_hint: {'right': 1}
+                    
+        GridLayout:
+            cols: 4
+            ############################## SAVE/DELETE OPTIONS ##############################
+            Widget:
+            Button:
+                text: "Save"
+                color: root.rgb(13, 59, 102)
+                background_normal: ''
+                background_color: root.rgb(237, 151, 76)
+                background_down: 'assets/orange_button_down.png'
+                canvas.before:
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 2
+                        rectangle: self.x, self.y, self.width, self.height
+                            
+            Button:
+                text: "Delete"
+                color: root.rgb(13, 59, 102)
+                background_normal: ''
+                background_color: root.rgb(237, 151, 76)
+                background_down: 'assets/orange_button_down.png'
+                
+                canvas.before:
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 2
+                        rectangle: self.x, self.y, self.width, self.height
+                    
+                    
+            Widget:
+
+                
+    BottomMenu:
+        pos_hint: {"bottom": 1}
+        size_hint_y: .1
+            
+            
+                
