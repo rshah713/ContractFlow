@@ -17,5 +17,6 @@ class ManageLocation(Screen):
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'down'
         BottomMenu.save_last_screen('manage location')
+        
 
 kv = Builder.load_file('manage_location.kv')
