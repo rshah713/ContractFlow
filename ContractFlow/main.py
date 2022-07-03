@@ -10,6 +10,8 @@ from add_meeting import AddMeeting
 from edit_meeting import EditMeeting
 from main_menu import MainMenu
 from manage_locations import ManageLocation
+from stats import Statistics
+
 
 class WindowManager(ScreenManager):
     pass
