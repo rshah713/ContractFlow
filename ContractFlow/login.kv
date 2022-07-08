@@ -2,7 +2,7 @@
     name: 'login'
 
         
-    ############################## TOP MENU ##############################
+    ############################## LOGIN LABEL ##############################
     GridLayout:
         cols: 1
         
@@ -21,7 +21,7 @@
             
         pos_hint: {"top": .7}
         size_hint_y: .7
-        
+        ############################## EMAIL ##############################
         Label:
             text: "Email:"
             color: root.rgb(13, 59, 102)
@@ -29,6 +29,7 @@
             size_hint: (.1, .05)
             pos_hint: {'x': 0.15}
         TextInput:
+            id: email_textinput
             size_hint: (.7, .1)
             pos_hint: {'x': 0.15}
             multiline: False
@@ -42,5 +43,81 @@
                 Line:
                     width: 2
                     rectangle: self.x, self.y, self.width, self.height
+                        
+        Widget:
+            size_hint_y: 0.1
                 
+        ############################## PASSWORD ##############################
+                
+        Label:
+            text: "Password:"
+            color: root.rgb(13, 59, 102)
+            font_size: 20
+            size_hint: (.1, .05)
+            pos_hint: {'x': 0.15}
+        TextInput:
+            id: pw_textinput
+            size_hint: (.7, .1)
+            pos_hint: {'x': 0.15}
+            password: True
+            multiline: False
+            text: ""
+            background_color: root.rgb(13, 59, 102, alpha=0)
+            foreground_color: root.rgb(250, 87, 55)
+                
+            canvas.after:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+                        
+        ############################## FORGOT PASSWORD ##############################        
         Button:
+            size_hint: (.3, .1)
+            pos_hint: {'x': 0.55}
+            
+            text: "Forgot Password"
+            color: root.rgb(13, 59, 102)
+            background_normal: ''
+            background_color: root.rgb(13, 59, 102, alpha=0)
+            on_press: print(self.parent.size)
+                
+        Widget:
+            size_hint_y: 0.1
+                
+            
+        Button:
+            size_hint: (.3, .2)
+            pos_hint: {'center_x': 0.5}
+            on_release: root.manager.current = 'dashboard' if root.login(email_textinput, pw_textinput) else print()
+                
+            color: root.rgb(13, 59, 102)
+            background_normal: '' #https://stackoverflow.com/a/49100826/12514570
+            text: 'Login'
+            font_size: 45
+
+            background_color: root.rgb(237, 151, 76)
+            background_down: 'assets/orange_button_down.png'
+
+
+
+
+            canvas.before:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 3
+                    rectangle: self.x, self.y, self.width, self.height
+
+        Widget:
+            size_hint_y: .2
+                
+        ############################## LOGO HERE ##############################        
+        Button:
+            text: 'logo here'
+            size_hint_y: .1
+                
+                
+        Widget:
+            size_hint_y: .2

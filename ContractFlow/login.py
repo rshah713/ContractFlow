@@ -16,5 +16,22 @@ class Login(Screen):
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'down'
         
+    def login(self, email, pw):
+        """
+        :self :class: `Login`
+        :email Email TextInput
+        :pw Password TextInput
+        """
+        
+        username = email.text
+        password = pw.text
+        print(username, password)
+        
+        #ToDo: handle db stuff here
+        
+        # if wrong, set email.text = "" & pw
+        return True
+        
+        
 
 kv = Builder.load_file('login.kv')
