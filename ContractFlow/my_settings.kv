@@ -1,0 +1,85 @@
+<MySettings>:
+    name: 'settings'
+    username: username
+    
+    GridLayout:
+        pos_hint: {'top': 0.9}
+        username: username
+        cols: 1
+        
+        GridLayout:
+            username: username
+            cols: 2
+            padding: 75, 0
+            
+            Button:
+                
+                size_hint: (.5, .3)
+                background_normal: ''
+                background_color: root.rgb(237, 151, 76, alpha=0)
+
+                    
+                Image:
+                    source: 'assets/user_profile.png'
+                    y: self.parent.y + self.parent.height - self.parent.size[1]
+                    x: self.parent.x
+                     
+                    size: self.parent.size
+                    allow_stretch: True
+            
+            
+            Label:
+                id: username
+                font_name: 'Roboto-Bold'
+                font_size: 60
+                color: root.rgb(13, 59, 102)
+                text: ''
+                    
+                    
+        FloatLayout:
+            Button:
+                pos_hint: {'center_x': 0.5, 'center_y' : 0.5}
+                size_hint: (.3, .3)
+                text: 'Log Out'
+                color: root.rgb(13, 59, 102)
+                    
+                background_normal: '' #https://stackoverflow.com/a/49100826/12514570
+                background_down: 'assets/orange_button_down.png'
+                font_size: 25
+                    
+                background_color: root.rgb(237, 151, 76)
+                    
+                canvas.before:
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 3
+                        rectangle: self.x, self.y, self.width, self.height
+        
+        FloatLayout:
+            
+            Button:
+                pos_hint: {'center_x': 0.5, 'center_y' : 0.5}
+                color: root.rgb(13, 59, 102)
+                size_hint: (.3, .3)
+                text: 'Delete my Data'
+                background_color: root.rgb(250, 87, 55)
+                background_normal: '' #https://stackoverflow.com/a/49100826/12514570
+                background_down: 'assets/orange_button_down.png'
+                    
+                font_size: 25
+                canvas.before:
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 3
+                        rectangle: self.x, self.y, self.width, self.height
+                
+        Widget:
+        Widget:
+        Widget:
+            
+            
+    BottomMenu:
+        pos_hint: {"bottom": 1}
+        size_hint_y: .1

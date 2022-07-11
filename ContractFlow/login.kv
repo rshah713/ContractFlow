@@ -33,7 +33,7 @@
             size_hint: (.7, .1)
             pos_hint: {'x': 0.15}
             multiline: False
-            text: "@hotmail.com"
+            text: "veer@hotmail.com"
             background_color: root.rgb(13, 59, 102, alpha=0)
             foreground_color: root.rgb(250, 87, 55)
                 
@@ -90,7 +90,10 @@
         Button:
             size_hint: (.3, .2)
             pos_hint: {'center_x': 0.5}
-            on_release: root.manager.current = 'dashboard' if root.login(email_textinput, pw_textinput) else print()
+            on_release:
+                root.manager.get_screen('settings').save_username(email_textinput.text) if root.login(email_textinput, pw_textinput) else print()
+                root.manager.current = 'dashboard' if root.login(email_textinput, pw_textinput) else print()
+                
                 
             color: root.rgb(13, 59, 102)
             background_normal: '' #https://stackoverflow.com/a/49100826/12514570

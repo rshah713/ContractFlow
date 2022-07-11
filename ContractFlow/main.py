@@ -4,6 +4,7 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.screenmanager import Screen
 
 from dashboard import Dashboard
 from add_meeting import AddMeeting
@@ -12,6 +13,7 @@ from main_menu import MainMenu
 from manage_locations import ManageLocation
 from stats import Statistics
 from login import Login
+from settings import MySettings
 
 
 class WindowManager(ScreenManager):
