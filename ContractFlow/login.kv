@@ -72,16 +72,16 @@
                     width: 2
                     rectangle: self.x, self.y, self.width, self.height
                         
-        ############################## FORGOT PASSWORD ##############################        
+        ############################## NEW ACCOUNT ##############################        
         Button:
             size_hint: (.3, .1)
             pos_hint: {'x': 0.55}
             
-            text: "Forgot Password"
+            text: "New Account"
             color: root.rgb(13, 59, 102)
             background_normal: ''
             background_color: root.rgb(13, 59, 102, alpha=0)
-            on_press: print(self.parent.size)
+            on_press: root.manager.current = 'signup'
                 
         Widget:
             size_hint_y: 0.1
@@ -92,7 +92,7 @@
             pos_hint: {'center_x': 0.5}
             on_release:
                 root.manager.get_screen('settings').save_username(email_textinput.text) if root.login(email_textinput, pw_textinput) else print()
-                root.manager.current = 'dashboard' if root.login(email_textinput, pw_textinput) else print()
+                root.manager.current = 'dashboard' if root.login(email_textinput, pw_textinput) else 'login'
                 
                 
             color: root.rgb(13, 59, 102)

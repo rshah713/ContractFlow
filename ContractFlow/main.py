@@ -14,6 +14,7 @@ from manage_locations import ManageLocation
 from stats import Statistics
 from login import Login
 from settings import MySettings
+from signup import Signup
 
 
 class WindowManager(ScreenManager):

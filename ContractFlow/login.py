@@ -27,6 +27,9 @@ class Login(Screen):
         password = pw.text
         print(username, password)
         
+        if pw.text == '':
+            return False
+        
         #ToDo: handle db stuff here
         
         # if wrong, set email.text = "" & pw
