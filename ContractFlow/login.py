@@ -14,7 +14,7 @@ class Login(Screen):
         return BottomMenu.rgb(self, r, g, b, alpha)
         
     def on_pre_leave(self, *args):
-        self.manager.transition.direction = 'down'
+        self.manager.transition.direction = 'up'
         
     def login(self, email, pw):
         """
@@ -27,7 +27,9 @@ class Login(Screen):
         password = pw.text
         print(username, password)
         
-        if pw.text == '':
+        if password == '' or username == '':
+            return False
+        if username.find('@') == -1:
             return False
         
         #ToDo: handle db stuff here
