@@ -147,16 +147,36 @@
             padding: 25, 0
                 
             Button:
-                text: 'prev'
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                background_down: ''
                 size_hint_x: 0.3
                 pos_hint: {'left': 0}
+                    
+                Image:
+                    source: 'assets/left-arrow.png'
+                    y: self.parent.y + self.parent.height - self.parent.size[1]
+                    x: self.parent.x
+                     
+                    size: self.parent.size
+                    allow_stretch: True
                     
             Widget:
                     
             Button:
-                text: 'next'
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                background_down: ''
                 size_hint_x: 0.3
                 pos_hint: {'right': 1}
+                    
+                Image:
+                    source: 'assets/right-arrow.png'
+                    y: self.parent.y + self.parent.height - self.parent.size[1]
+                    x: self.parent.x
+                     
+                    size: self.parent.size
+                    allow_stretch: True
                     
         GridLayout:
             cols: 4

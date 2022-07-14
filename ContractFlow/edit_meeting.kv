@@ -52,9 +52,19 @@
             Button:
                 size_hint: .3, .3
                 pos_hint: {'center_x': 0.5, 'center_y' :0.5}
-                text: 'prev'
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                background_down: ''
                 on_release:
                     if not(root.INVALID): root.change_screen(-1) 
+                        
+                Image:
+                    source: 'assets/left-arrow.png'
+                    y: self.parent.y + self.parent.height - self.parent.size[1]
+                    x: self.parent.x
+                     
+                    size: self.parent.size
+                    allow_stretch: True
 
             Label:
                 id: date
@@ -63,11 +73,21 @@
                 font_size: 35
 
             Button:
-                text: 'next'
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                background_down: ''
                 size_hint: .3, .3
                 pos_hint: {'center_x': 0.5, 'center_y' :0.5}
                 on_release:
                     if not root.INVALID: root.change_screen(1) 
+                        
+                Image:
+                    source: 'assets/right-arrow.png'
+                    y: self.parent.y + self.parent.height - self.parent.size[1]
+                    x: self.parent.x
+                     
+                    size: self.parent.size
+                    allow_stretch: True
                     
         Widget:
         Widget:
