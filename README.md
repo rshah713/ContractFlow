@@ -7,6 +7,15 @@ An iOS App to manage workflow for contractors.
 - Deployed and packaged with [toolchain](https://github.com/kivy/kivy-ios)
 - Backend with [Firebase REST API](https://firebase.google.com)
 
+### Run Locally
+1. Clone the repo
+2. Create a folder in `ContractFlow` called `authentication`
+3. Create `auth.py` in `authentication`
+4. Store your Firebase Web API Key in a constant called `API_KEY`
+    - Project Settings --> General --> Web API Key
+5. Follow the steps in Usage
+
+
 ### Usage
 
 To run the app from the Python interpreter:
