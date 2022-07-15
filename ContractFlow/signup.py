@@ -7,10 +7,14 @@ from kivy.uix.screenmanager import Screen
 
 
 from menu import BottomMenu
+from util import signup
 
 
 
 class Signup(Screen):
+
+    def on_enter(self, *args):
+        self.ids.errorlbl.text = ''
     def rgb(self, r, g, b, alpha=1):
         return BottomMenu.rgb(self, r, g, b, alpha)
         
@@ -18,33 +22,32 @@ class Signup(Screen):
         email = email_textinput.text
         pw = pw_textinput.text
         pw_confirm = pw_confirm_textinput.text
-        
-        
-        
-        
-        if pw != pw_confirm:
-            return False
             
-        if email == '' or pw == '' or pw_confirm == '':
+        if email == '':
+            self.ids.errorlbl.text = "Email cannot be empty"
+            return False
+        elif pw == '' or pw_confirm == '':
+            self.ids.errorlbl.text = "Password cannot be empty"
+            return False
+        elif pw != pw_confirm:
+            self.ids.errorlbl.text = "Passwords must match"
             return False
         if email.find('@') == -1:
+            self.ids.errorlbl.text = "Email must be valid"
             return False
             
             
-
+        successful_signup = signup(email, pw)
+        
+        if not successful_signup: # our checks passed but firebase rejected
+            self.ids.errorlbl.text = "EMAIL_EXISTS | OPERATION_NOT_ALLOWED | TOO_MANY_ATTEMPTS_TRY_LATER"
+            return False
             
-            
-
-            
-
-        #ToDo: DB storing
-        #ToDo: depending on the error...store it into self.ids.errorlbl.text
         return True
+        
         
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'down'
-        
-        
-        
+
 
 kv = Builder.load_file('signup.kv')

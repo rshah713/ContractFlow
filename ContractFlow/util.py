@@ -1,4 +1,4 @@
-
+from FirebaseRealtimeDB import sign_up_with_email
 
 def read_data():
     """open the file, seperate each entry, and return it"""
@@ -94,3 +94,20 @@ def num_unique_locations():
     return the number of unique locations to visit that day
     """
     return len(unique_locations())
+
+
+def signup(email, password):
+    """ signup to Firebase via email & password
+    :return true/false depending on status
+    """
+    
+    return_payload = sign_up_with_email(email, password)
+    
+    if return_payload == {}: # it failed
+        # reasons for failing: EMAIL_EXISTS, OPERATION_NOT_ALLOWED, or TOO_MANY_ATTEMPTS_TRY_LATER
+        return False
+    else:
+        # ToDo: we may need to return return_payload
+        # note: bool({}) == False so maybe return payload flat
+        # note: then we can check in main if bool(signup()) == False whatever
+        return True
