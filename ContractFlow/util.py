@@ -1,4 +1,4 @@
-from FirebaseRealtimeDB import sign_up_with_email
+from FirebaseRealtimeDB import sign_up_with_email, login_with_email_password
 
 def read_data():
     """open the file, seperate each entry, and return it"""
@@ -111,3 +111,13 @@ def signup(email, password):
         # note: bool({}) == False so maybe return payload flat
         # note: then we can check in main if bool(signup()) == False whatever
         return True
+
+def login(email, password):
+    """
+    login to Firebase via email/password after signup()
+    has been called
+    return payload (type dict), {} if unsuccessful
+    """
+    return_payload = login_with_email_password(email, password)
+    
+    return return_payload

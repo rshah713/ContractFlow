@@ -33,11 +33,14 @@ class MySettings(Screen):
         """ called from login screen as a way to save username """
         at_index = email.find('@')
         
-        if at_index == -1:
+        if at_index == -1: # should never hit this bc firebase won't take it
             user = 'ErrorFindingUsername!'
         else:
             user = email[:at_index]
         self.username = user
+        
+    def get_username(self):
+        return self.username
         
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'down'

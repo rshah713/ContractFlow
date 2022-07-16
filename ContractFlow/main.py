@@ -16,6 +16,7 @@ from login import Login
 from settings import MySettings
 from signup import Signup
 
+from FirebaseRealtimeDB import Firebase
 
 class WindowManager(ScreenManager):
     pass
@@ -24,6 +25,12 @@ class WindowManager(ScreenManager):
 class ContractFlowApp(App):
     def build(self):
         return
+        
+    def set_firebase_inst(self, username):
+        self.firebase = Firebase(username)
+    
+    def get_firebase_connection(self):
+        return self.firebase
         
 
 ContractFlowApp().run()

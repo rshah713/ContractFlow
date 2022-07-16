@@ -91,7 +91,6 @@
             size_hint: (.3, .2)
             pos_hint: {'center_x': 0.5}
             on_release:
-                root.manager.get_screen('settings').save_username(email_textinput.text) if root.login(email_textinput, pw_textinput) else print()
                 root.manager.current = 'dashboard' if root.login(email_textinput, pw_textinput) else 'login'
                 
                 

@@ -40,7 +40,7 @@ class Signup(Screen):
         successful_signup = signup(email, pw)
         
         if not successful_signup: # our checks passed but firebase rejected
-            self.ids.errorlbl.text = "EMAIL_EXISTS | OPERATION_NOT_ALLOWED | TOO_MANY_ATTEMPTS_TRY_LATER"
+            self.ids.errorlbl.text = "EMAIL_EXISTS\nOPERATION_NOT_ALLOWED\nTOO_MANY_ATTEMPTS_TRY_LATER"
             return False
             
         return True

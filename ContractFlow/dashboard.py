@@ -21,6 +21,7 @@ from util import content_present, num_unique_locations, read_data, process_data
 
 from datetime import date
 
+firebase = None
 
 kv = Builder.load_file('dashboard.kv')
 class Dashboard(Screen):
@@ -28,21 +29,22 @@ class Dashboard(Screen):
     def __init__(self, **kwargs):
         super(Dashboard, self).__init__(**kwargs)
         Window.clearcolor = self.rgb(250, 241, 203)
+        
     def on_enter(self, *args):
+        global firebase
         self.manager.transition.direction = 'up'
         Window.clearcolor = self.rgb(250, 241, 203)
+        firebase = App.get_running_app().get_firebase_connection()
         self.gen_layout()
         
+
     def rgb(self, r, g, b, alpha=1):
         return BottomMenu.rgb(self, r, g, b, alpha)
-        
-        
         
     
     def gen_layout(self):
         # floatlayout of the remaining 'body' not taken up by menu bars is same for both
         layout = FloatLayout(pos_hint={'center_y':0.5}, size_hint_y= 0.85)
-        
         meeting_count = content_present()
         print(meeting_count)
         if meeting_count == 0:
@@ -142,6 +144,4 @@ class Dashboard(Screen):
         BottomMenu.save_last_screen('dashboard')
         # layout.clear_widgets()
         
-            
-
 

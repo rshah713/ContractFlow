@@ -13,7 +13,7 @@ import urllib.parse as parse
 import urllib.error as error
 from http import client
 from datetime import datetime
-from authentication.auth import API_KEY
+from authentication.auth import API_KEY, BASE_URL
 
 class Firebase():
     def __init__(self, username, token=None):
@@ -24,7 +24,7 @@ class Firebase():
         
         self.token = token
         self.username = username
-        self.BASE_URL = "https://contractflowapp-ios-default-rtdb.firebaseio.com/"
+        self.BASE_URL = BASE_URL
         self.API_KEY = API_KEY
         
         
