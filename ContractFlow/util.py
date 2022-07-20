@@ -1,13 +1,21 @@
 from FirebaseRealtimeDB import sign_up_with_email, login_with_email_password
 
 def read_data(db):
-    """open the file, seperate each entry, and return it"""
+    """open the file, seperate each entry, and return it
+        return original entry list split into
+    [start time, end time, date, place name, place address]"""
     
-    # ToDo: handle database reading
-    meetings_f = open('meetings.txt', 'r')
-    meetings = meetings_f.readlines()
-    meetings_f.close()
-    return meetings
+    final = []
+    meets = db.read_path('meetings')
+    del meets['lastAppt']
+    for i in meets:
+        curr = meets[i]
+        final.append([
+           curr['start_time'], curr['end_time'], curr['date'], curr['location'],
+           get_loc_address(db, curr['location']) ]
+           )
+           
+    return final
     
     
 def write_entry(db, entry):
@@ -102,7 +110,9 @@ def num_unique_locations(db, data=None):
     # ToDo: implement once we figure out read_data()
     return len(unique_locations(db))
     
-
+def get_loc_address(db, loc_name):
+    locs = unique_locations(db)
+    return locs.get(loc_name)
 
 def signup(email, password):
     """ signup to Firebase via email & password
@@ -146,3 +156,4 @@ def create_new_user(db):
             {"address": "Add another location to remove this",
             "wage": 0})
     db.patch_path('meetings', {'lastAppt': 'appt0'})
+

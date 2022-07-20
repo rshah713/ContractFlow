@@ -60,14 +60,15 @@ class Login(Screen):
         
         
     def admin_access(self, real_username):
-        from authentication.auth import ADMIN_TOKEN
+        from authentication.auth import admin_auth
         #### Allow admin access to any account via username
         #### when email Textinput begins with `debug:` this function
         #### is automatically called
         username = real_username[len('debug:'):] + '@yahoo.com' # we add @... so save_username logic works
         self.manager.get_screen('settings').save_username(username)
         real_username = self.manager.get_screen('settings').get_username()
-        App.get_running_app().set_firebase_inst(real_username, ADMIN_TOKEN) # create global firebase inst
+        print(real_username)
+        App.get_running_app().set_firebase_inst(real_username, admin_auth()) # create global firebase inst
         
         
         
