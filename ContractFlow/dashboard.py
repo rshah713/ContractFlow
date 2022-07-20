@@ -17,11 +17,13 @@ from kivy.core.window import Window
 
 
 from menu import BottomMenu
-from util import content_present, num_unique_locations, read_data, process_data
+from util import content_present, num_unique_locations
+from util import read_data, process_data
+from util import create_new_user
 
 from datetime import date
 
-firebase = None
+
 
 kv = Builder.load_file('dashboard.kv')
 class Dashboard(Screen):
@@ -31,10 +33,30 @@ class Dashboard(Screen):
         Window.clearcolor = self.rgb(250, 241, 203)
         
     def on_enter(self, *args):
-        global firebase
         self.manager.transition.direction = 'up'
-        Window.clearcolor = self.rgb(250, 241, 203)
-        firebase = App.get_running_app().get_firebase_connection()
+        
+        self.firebase = App.get_running_app().get_firebase_connection()
+        if self.firebase.read_path('meetings') == {}: # user does not exist?
+            create_new_user(self.firebase)
+            """
+            - IMPORTANT SECURITY NOTE
+            
+            Possible flaw: if anything goes wrong internally in FirebaseRealtimeDB
+            it logs exeption and returns {}
+            yet if the directory doesn't exist it also returns {}
+                - native urllib returns None but we have if block in
+                - Firebase.read_data that turns None into {} when returning
+                
+            POSSIBLE BUG: something goes wrong, we create_new_user() and wipe data as opposed to only creating new user if they don't exist
+            
+            ------------
+            Possible Fix:
+                - in that `if payload == None: payload = {}` (in Fireabse.read_data}
+                - change to payload = {'doesNotExist': True}
+                - then check here or in util for doesNotExist key vs {} vs actual content
+            
+            """
+            
         self.gen_layout()
         
 
@@ -43,9 +65,12 @@ class Dashboard(Screen):
         
     
     def gen_layout(self):
+        cnt_present = content_present(self.firebase)
+        self.ids.content_present_lbl.text = str(cnt_present)
+        self.ids.content_present_lbl.color = self.rgb(13, 59, 102) if cnt_present == 0 else self.rgb(250, 87, 55)
         # floatlayout of the remaining 'body' not taken up by menu bars is same for both
         layout = FloatLayout(pos_hint={'center_y':0.5}, size_hint_y= 0.85)
-        meeting_count = content_present()
+        meeting_count = cnt_present
         print(meeting_count)
         if meeting_count == 0:
             # there is no content: switch to no meeting layout
@@ -80,7 +105,7 @@ class Dashboard(Screen):
             ))
             date_grid.add_widget(Widget())
             
-            meetings = read_data()
+            meetings = read_data(self.firebase)
             print(meetings)
             
             item_grid = GridLayout(cols=1, row_force_default=True, row_default_height=100, pos_hint = {'x': 0, 'top':0.8}, padding=(25, 0))

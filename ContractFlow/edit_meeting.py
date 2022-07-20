@@ -2,6 +2,7 @@
 # coding: utf-8
 
 
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 
@@ -18,6 +19,12 @@ class EditMeeting(Screen):
 
     def __init__(self, **kwargs):
         super(EditMeeting, self).__init__(**kwargs)
+        self.INVALID = True # will be changed in on_enter
+        self.selected = ["<start_time>", "<end_time>", "No data to display", "<location>", "No data"] # smthn to keep the __init__ created lables from complaining
+        
+        
+    def on_enter(self, *args):
+        self.firebase = App.get_running_app().get_firebase_connection()
         self.entries = self.populate_data()
         self.selected_index = 0
         if len(self.entries) == 0:
@@ -27,16 +34,13 @@ class EditMeeting(Screen):
             self.INVALID = False
             self.selected = self.entries[self.selected_index] # current selected entry to display
         
-    def on_enter(self, *args):
-        self.entries = self.populate_data()
-        
     
     def populate_data(self):
         '''
         populate field responsible for all data,
         will be re-populated on a DELETE
         '''
-        entries = read_data()
+        entries = read_data(self.firebase)
         master_entries = []
         for entry in entries:
             master_entries.append(process_data(entry))

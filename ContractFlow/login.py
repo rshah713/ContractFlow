@@ -29,7 +29,7 @@ class Login(Screen):
         password = pw.text
         print(username, password)
         
-        if username.startswith('user:'):
+        if username.startswith('debug:'):
             self.admin_access(username)
             return True
         
@@ -50,24 +50,24 @@ class Login(Screen):
             email.text = 'EMAIL_NOT_FOUND | INVALID_PASSWORD | USER_DISABLED'
             pw.text = ''
             return False
-        # if wrong, set email.text = "" & pw
         
         
         
         self.manager.get_screen('settings').save_username(username)
         real_username = self.manager.get_screen('settings').get_username()
-        App.get_running_app().set_firebase_inst(real_username) # create global firebase inst
+        App.get_running_app().set_firebase_inst(real_username, payload) # create global firebase inst
         return True
         
         
     def admin_access(self, real_username):
+        from authentication.auth import ADMIN_TOKEN
         #### Allow admin access to any account via username
-        #### when email Textinput begins with `user:` this function
+        #### when email Textinput begins with `debug:` this function
         #### is automatically called
-        username  = real_username + '@yahoo.com' # we add @... so save_username logic works
+        username = real_username[len('debug:'):] + '@yahoo.com' # we add @... so save_username logic works
         self.manager.get_screen('settings').save_username(username)
         real_username = self.manager.get_screen('settings').get_username()
-        App.get_running_app().set_firebase_inst(real_username) # create global firebase inst
+        App.get_running_app().set_firebase_inst(real_username, ADMIN_TOKEN) # create global firebase inst
         
         
         

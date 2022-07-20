@@ -1,6 +1,6 @@
 from FirebaseRealtimeDB import sign_up_with_email, login_with_email_password
 
-def read_data():
+def read_data(db=None):
     """open the file, seperate each entry, and return it"""
     
     # ToDo: handle database reading
@@ -69,11 +69,14 @@ def delete_entry(entry):
     
     
 
-def content_present():
+def content_present(db):
     """
     return the amount of meetings that day
     """
-    return len(read_data())
+    apptNum = db.read_path('meetings')
+    apptNum = apptNum['lastAppt']
+    apptNum = int(apptNum[len('appt'):])
+    return apptNum
     
 def unique_locations():
     """
@@ -98,7 +101,7 @@ def num_unique_locations():
 
 def signup(email, password):
     """ signup to Firebase via email & password
-    :return true/false depending on status
+    :return {} if failed or credential dict if success
     """
     
     return_payload = sign_up_with_email(email, password)
@@ -107,9 +110,15 @@ def signup(email, password):
         # reasons for failing: EMAIL_EXISTS, OPERATION_NOT_ALLOWED, or TOO_MANY_ATTEMPTS_TRY_LATER
         return False
     else:
-        # ToDo: we may need to return return_payload
+        # NoLongerToDo: we may need to return return_payload
         # note: bool({}) == False so maybe return payload flat
         # note: then we can check in main if bool(signup()) == False whatever
+        
+        # Updated comment: Since we make user sign in after signup(),
+        # login() is called which returns payload
+        # which is passed to Firebase()
+        # so this implementation can stay same
+        # without breaking changes
         return True
 
 def login(email, password):
@@ -121,3 +130,14 @@ def login(email, password):
     return_payload = login_with_email_password(email, password)
     
     return return_payload
+
+def create_new_user(db):
+    """
+    Create basic directories for a new user
+    :db Firebase instance
+    """
+    
+    db.patch_path('locations/Default Location',
+            {"address": "Add another location to remove this",
+            "wage": 0})
+    db.patch_path('meetings', {'lastAppt': 'appt0'})

@@ -26,8 +26,8 @@ class ContractFlowApp(App):
     def build(self):
         return
         
-    def set_firebase_inst(self, username):
-        self.firebase = Firebase(username)
+    def set_firebase_inst(self, username, credentials):
+        self.firebase = Firebase(username, credentials)
     
     def get_firebase_connection(self):
         return self.firebase

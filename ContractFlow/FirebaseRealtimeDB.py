@@ -16,13 +16,19 @@ from datetime import datetime
 from authentication.auth import API_KEY, BASE_URL
 
 class Firebase():
-    def __init__(self, username, token=None):
+    def __init__(self, username, credentials):
         """
-        `token`:
+        `credentials`: dict returned by a successful login function
+            - { 'kind': ...,
+                'idToken': ...,
+                'email' : ...,
+                'expiresIn' : ...,
+                'localId' : ...
+                }
         `username`: the username (auto-appended to BASEURL) to write/read data
         """
         
-        self.token = token
+        self.credentials = credentials
         self.username = username
         self.BASE_URL = BASE_URL
         self.API_KEY = API_KEY
@@ -38,7 +44,7 @@ class Firebase():
     def read_path(self, path=''):
         """
         `path`: path following BASE_URL, can be as nested as stored JSON allows
-            - ex: users/viralandsejal
+            - ex: meetings/appt1 (/users/{username} auto-appended)
         :returns dict with requested informaton
             - {} means path was unauthorized/not found
         """
@@ -46,6 +52,11 @@ class Firebase():
         req_url = self.BASE_URL + 'users/' + self.username + '/' + path + '/.json' # .json can also be used (no difference)
         
         req_url = req_url.replace(' ', "%20")
+        
+        auth = {'auth' : self.credentials['idToken']}
+        auth = parse.urlencode(auth)
+        
+        req_url += '?' + auth
         
         try:
             resp = request.urlopen(req_url)
@@ -69,7 +80,6 @@ class Firebase():
             self.log_error(errorName, str(err))
             
         except Exception as e:
-
             self.log_error(str(e), path)
 
         if resp is None:
@@ -84,7 +94,15 @@ class Firebase():
         print(data)
         payload = json.dumps(data).encode() #dict --> json --> bytes/json
         req_url = self.BASE_URL + 'users/' + self.username + '/' + path + '/.json'
+        
         req_url = req_url.replace(' ', "%20")
+        
+        
+        auth = {'auth' : self.credentials['idToken']}
+        auth = parse.urlencode(auth)
+        req_url += '?' + auth
+        
+        
         req = request.Request(req_url, data=payload, method="PATCH")
         try:
             resp = request.urlopen(req)
@@ -106,7 +124,7 @@ class Firebase():
             self.log_error(errorName, str(err))
             
         except Exception as e:
-
+            print("hitting it here \n\n\n\n\n\n\n", str(e))
             self.log_error(str(e), path)
             
             
@@ -123,13 +141,24 @@ class Firebase():
         # https://groups.google.com/g/firebase-talk/c/vtX8lfxxShk
         # that means for usernames we dropping underscores
         err = err.replace('.', '_')
+        err = err.replace('[', '<')
+        err = err.replace(']', '>')
         
         payload = {err: desc, 'date': str(datetime.now())}
+        print(payload)
         
         payload = json.dumps(payload).encode() #dict --> json --> bytes/json
         
         req_url = self.BASE_URL + 'logs/' + self.username + '/.json'
         req_url = req_url.strip()
+        
+        auth = {'auth' : self.credentials['idToken']}
+        auth = parse.urlencode(auth)
+        req_url += '?' + auth
+        
+        print(req_url)
+        
+        
         req = request.Request(req_url, data=payload, method="PATCH")
         
         loader = request.urlopen(req)
@@ -147,7 +176,8 @@ def sign_up_with_email(email, password):
     
     
     headers = {"content-type": "application/json; charset=UTF-8" } # WE NEED HEADERS
-    # I SPENT LIKE 3.5 / 4 HOURS AND IT FAILED AND FINALLY IDK WHY I DUG INTO SOURCE CODE OF PYREBASE WHICH USES REQUESTS BUT FIGURED OUT HEADERS PUSH THIS THRU
+    # I SPENT LIKE 3.5 / 4 HOURS AND IT FAILED
+    # AND FINALLY, IDK WHY, BUT I DUG INTO SOURCE CODE OF PYREBASE WHICH USES REQUESTS BUT FIGURED OUT HEADERS PUSH THIS THRU
 
     user_payload = {
         'email' : email,
