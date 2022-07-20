@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.uix.gridlayout import GridLayout
@@ -26,7 +26,7 @@ class AddMeeting(Screen):
 
     def __init__(self, **kwargs):
         super(AddMeeting, self).__init__(**kwargs)
-        self.next_location = self.get_next_location()
+        self.next_location = 'None' # filled on_enter w/ firebase
         self.today = date.today().strftime("%B %d") # 'June 24'
         self.location = ''
         self.timergui = TimePicker(self, 'Start time')
@@ -36,6 +36,8 @@ class AddMeeting(Screen):
     
     def on_enter(self, *kwargs):
         self.manager.transition.direction = 'down'
+        self.firebase = App.get_running_app().get_firebase_connection()
+        self.next_location = self.get_next_location()
         
         """
         if self.location == '' it means init ran and those r the options we want
@@ -53,7 +55,7 @@ class AddMeeting(Screen):
         BottomMenu.save_last_screen('add meeting')
         
     def get_next_location(self):
-        for place in unique_locations():
+        for place in unique_locations(self.firebase):
             yield place
 
     def update_location_label(self):
@@ -80,9 +82,8 @@ class AddMeeting(Screen):
 
         
     def add_meeting(self, location, date, start, end):
-        # ToDo: expand parameters to take in each label (or raw.txt?)
         # ToDo: write & call appropriate util func to push to db
-        write_entry([start, end, date, location])
+        write_entry(self.firebase, [start, end, date, location])
         
     def customize_screen(self, location=None, date=None, start=None, finish=None):
         """ used to override defaults on this screen

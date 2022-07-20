@@ -4,6 +4,7 @@
 <Dashboard>:
     name: "dashboard"
     content_present_lbl : content_present_lbl
+    unique_locs_lbl: unique_locs_lbl
     
 ############################## TOP MENU ##############################
     GridLayout:
@@ -124,8 +125,9 @@
                 allow_stretch: True
              
         Label:
-            color: root.rgb(13, 59, 102) if num_unique_locations() == 0 else root.rgb(250, 87, 55)
-            text: str(num_unique_locations())
+            id: unique_locs_lbl
+            color: root.rgb(0,0,0)
+            text: "Error"
         Widget:
 
 

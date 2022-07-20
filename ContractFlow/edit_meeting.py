@@ -68,7 +68,7 @@ class EditMeeting(Screen):
         self.ids.time.text = '{} - {}'.format(self.selected[0], self.selected[1])
             
     def remove_entry(self):
-        delete_entry(self.selected)
+        delete_entry(self.firebase, self.selected)
         self.entries = self.populate_data()
         self.change_screen(1)
 

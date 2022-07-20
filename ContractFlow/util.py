@@ -1,6 +1,6 @@
 from FirebaseRealtimeDB import sign_up_with_email, login_with_email_password
 
-def read_data(db=None):
+def read_data(db):
     """open the file, seperate each entry, and return it"""
     
     # ToDo: handle database reading
@@ -10,13 +10,13 @@ def read_data(db=None):
     return meetings
     
     
-def write_entry(entry):
+def write_entry(db, entry):
     """
     append an entry containing [start time, end time, date, place name, place address]
     """
     # ToDo: write into db
     
-    locations = unique_locations()
+    locations = unique_locations(db)
     # we dont need to check if it exists
     # bc the only way user can select is from addMeeting
     # which only lets them pick prexisting places
@@ -45,8 +45,8 @@ def process_data(entry):
     return split
     
     
-def delete_entry(entry):
-    entries = read_data()
+def delete_entry(db, entry):
+    entries = read_data(db)
     entries = [process_data(entry) for entry in entries]
     entries.remove(entry)
     e = entries.copy()
@@ -66,8 +66,7 @@ def delete_entry(entry):
     meetings_f.close()
     
     #ToDo: reload editmeeting screen from menu when we click
-    
-    
+
 
 def content_present(db):
     """
@@ -78,25 +77,31 @@ def content_present(db):
     apptNum = int(apptNum[len('appt'):])
     return apptNum
     
-def unique_locations():
+def unique_locations(db):
     """
     return dict containing {'place' : 'address'}
     """
-    entries = read_data()
+    locs = db.read_path('locations')
     places = {}
-    for entry in entries:
-        info = process_data(entry)
-        place = info[3]
-        address = info[4].strip()
-        places[place] = address #if it exists dict will alr rewrite
     
+    for location_name in locs:
+        places[location_name] = locs[location_name]['address']
+        
     return places
     
-def num_unique_locations():
+def num_unique_locations(db, data=None):
     """
     return the number of unique locations to visit that day
+    
+    :data optional dict of today's meetings, from which unique_locs will be extracted. if none provided, general unique locs provided
     """
-    return len(unique_locations())
+    
+    if data is None:
+        return len(unique_locations(db))
+    
+    # ToDo: implement once we figure out read_data()
+    return len(unique_locations(db))
+    
 
 
 def signup(email, password):

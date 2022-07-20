@@ -66,8 +66,11 @@ class Dashboard(Screen):
     
     def gen_layout(self):
         cnt_present = content_present(self.firebase)
+        num_unique_locs = num_unique_locations(self.firebase)
         self.ids.content_present_lbl.text = str(cnt_present)
         self.ids.content_present_lbl.color = self.rgb(13, 59, 102) if cnt_present == 0 else self.rgb(250, 87, 55)
+        self.ids.unique_locs_lbl.text = str(num_unique_locs)
+        self.ids.unique_locs_lbl.color = self.rgb(13, 59, 102) if num_unique_locs == 0 else self.rgb(250, 87, 55)
         # floatlayout of the remaining 'body' not taken up by menu bars is same for both
         layout = FloatLayout(pos_hint={'center_y':0.5}, size_hint_y= 0.85)
         meeting_count = cnt_present

@@ -91,7 +91,7 @@ class Firebase():
         `path`: path to push data, for example locations or locations/Cranbury Center
         data: dict of data to dump
         """
-        print(data)
+        
         payload = json.dumps(data).encode() #dict --> json --> bytes/json
         req_url = self.BASE_URL + 'users/' + self.username + '/' + path + '/.json'
         
@@ -120,11 +120,10 @@ class Firebase():
             if module is None or module == str.__class__.__module__:
                 errorName = err.__class__.__name__
             errorName =  module + '.' + err.__class__.__name__
-            print(errorName)
+            
             self.log_error(errorName, str(err))
             
         except Exception as e:
-            print("hitting it here \n\n\n\n\n\n\n", str(e))
             self.log_error(str(e), path)
             
             
@@ -145,7 +144,6 @@ class Firebase():
         err = err.replace(']', '>')
         
         payload = {err: desc, 'date': str(datetime.now())}
-        print(payload)
         
         payload = json.dumps(payload).encode() #dict --> json --> bytes/json
         
@@ -155,9 +153,6 @@ class Firebase():
         auth = {'auth' : self.credentials['idToken']}
         auth = parse.urlencode(auth)
         req_url += '?' + auth
-        
-        print(req_url)
-        
         
         req = request.Request(req_url, data=payload, method="PATCH")
         
@@ -185,7 +180,6 @@ def sign_up_with_email(email, password):
         'returnSecureToken' : True
     }
 
-    print(json.dumps(user_payload))
     user_payload = json.dumps(user_payload).encode() #dict --> json --> bytes/json
     req = request.Request(ENDPOINT_URL, data=user_payload, headers=headers, method="POST")
     try:
