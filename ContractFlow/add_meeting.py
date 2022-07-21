@@ -11,18 +11,15 @@ from kivy.garden.circulardatetimepicker import CircularTimePicker
 
 
 from menu import BottomMenu
-from util import unique_locations, write_entry
+from util import unique_locations, create_meeting
 from datepicker import DatePicker
+from edit_meeting import EditMeeting
 
 from datetime import date, datetime
 
 kv = Builder.load_file('add_meeting.kv')
 
-
 class AddMeeting(Screen):
-
-    
-
 
     def __init__(self, **kwargs):
         super(AddMeeting, self).__init__(**kwargs)
@@ -82,8 +79,7 @@ class AddMeeting(Screen):
 
         
     def add_meeting(self, location, date, start, end):
-        # ToDo: write & call appropriate util func to push to db
-        write_entry(self.firebase, [start, end, date, location])
+        create_meeting(self.firebase, [start, end, date, location])
         
     def customize_screen(self, location=None, date=None, start=None, finish=None):
         """ used to override defaults on this screen
@@ -114,6 +110,7 @@ class TimePicker(Popup):
         return self.time
         
     def update_label(self):
+        print(type(self.time))
         if self.mode == "Start time":
             self.screen.ids.starttime.text = self.time.strftime("%I:%M %p")
         elif self.mode == "End time":

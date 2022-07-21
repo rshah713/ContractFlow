@@ -1,4 +1,5 @@
 from FirebaseRealtimeDB import sign_up_with_email, login_with_email_password
+from datetime import datetime
 
 def read_data(db):
     """open the file, seperate each entry, and return it
@@ -18,9 +19,10 @@ def read_data(db):
     return final
     
     
-def write_entry(db, entry):
+def create_meeting(db, entry):
     """
-    append an entry containing [start time, end time, date, place name, place address]
+    ::note.. entry does not have address yet, we add it here
+    append an entry containing [start time, end time, date, place name, place, address]
     """
     # ToDo: write into db
     
@@ -33,10 +35,25 @@ def write_entry(db, entry):
     e = entry.copy()
     for ind, elem in enumerate(e):
         entry[ind] = elem.strip()
-    meetings_f = open('meetings.txt', 'a')
-    meetings_f.write('\n')
-    meetings_f.write(', '.join(entry))
-    meetings_f.close()
+        
+    lastAppt = db.read_path('meetings/lastAppt')
+    apptNum = int(lastAppt[len('appt'):])
+    nextAppt = 'appt' + str(apptNum+1)
+    
+    # first patch lastAppt to nextAppt
+    db.patch_path('meetings', {'lastAppt': nextAppt})
+    
+    # now patch the actual meeting w/ apptNum
+    
+    data = {
+        'start_time': entry[0],
+        'end_time': entry[1],
+        'date': entry[2],
+        'location': entry[3]
+    }
+    db.patch_path(f'meetings/{nextAppt}', data)
+    
+    
     
     
 
@@ -54,26 +71,53 @@ def process_data(entry):
     
     
 def delete_entry(db, entry):
-    entries = read_data(db)
-    entries = [process_data(entry) for entry in entries]
-    entries.remove(entry)
-    e = entries.copy()
-    entries = []
-    for entry in e:
-        c = []
-        for item in entry:
-            c.append(item.strip())
-        entries.append(c)
-    meetings_f = open('meetings.txt', 'w')
+        ### to delete node from JSON
+    ### we need appt# foldername
+    ### we can't just check time == time bc "06:00" != "6:00"
     
-    for ind in range(len(entries)-1): # everything except the last we write \n
-        meetings_f.write(', '.join(entries[ind]))
-        meetings_f.write('\n')
+    # Convert to datetime.datetime() --> check equality --> backtrace and store appt#
+    # delete appt# and re-patch data to branch
+    meetings = db.read_path('meetings')
+    
+    e = []
+    for i in entry:
+        e.append(i.strip())
         
-    meetings_f.write(', '.join(entries[-1]))
-    meetings_f.close()
+    entry_date = datetime.strptime(e[2], '%B %d')
+    entry_starttime = datetime.strptime(e[0], "%I:%M %p")
+    entry_endtime = datetime.strptime(e[1], "%I:%M %p")
+    entry_loc = entry[3]
     
-    #ToDo: reload editmeeting screen from menu when we click
+    CHOSEN_APPTNUM = ''
+    
+    for apptNum in meetings:
+        curr = meetings[apptNum]
+        curr_date = datetime.strptime(curr['date'], '%B %d')
+        curr_starttime = datetime.strptime(curr['start_time'], "%I:%M %p")
+        curr_endtime = datetime.strptime(curr['end_time'], "%I:%M %p")
+        if curr_date == entry_date:
+            if curr_starttime == entry_starttime:
+                if curr_endtime == entry_endtime:
+                    CHOSEN_APPTNUM = apptNum
+                    break
+    
+    db.delete_path('meetings/' + CHOSEN_APPTNUM)
+    
+    
+    # Currently if we delete a node (ex. appt3) out of max (appt6)
+    # it will read appt1, appt2, appt4, appt5, appt6, lastAppt: appt6
+    # Right now: we check if deleted appt6 to shift the lastAppt down
+    # But this overtime will create gaps in appt# that should be filled
+    # ToDo: Possible solution: always shift keys down 1 when deleting node
+    
+    # check if we deleted last node
+    lastAppt = db.read_path('meetings/lastAppt')
+    if lastAppt == CHOSEN_APPTNUM:
+            apptNum = int(lastAppt[len('appt'):])
+            prevAppt = 'appt' + str(apptNum-1)
+            db.patch_path('meetings', {'lastAppt': prevAppt})
+        
+    
 
 
 def content_present(db):
