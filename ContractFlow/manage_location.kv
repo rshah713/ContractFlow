@@ -1,5 +1,8 @@
 <ManageLocation>:
     name: 'manage location'
+    loc_name: loc_name
+    addr: addr
+    wage: wage
         
         
     ############################## TOP MENU ##############################
@@ -66,9 +69,10 @@
                         rectangle: 0, self.y, root.width, self.height
 
             TextInput:
+                id: loc_name
                 size_hint: (.7, 1)
                 multiline: False
-                text: "Meadow Lakes"
+                text: root.temp_key
                 background_color: root.rgb(13, 59, 102)
                 foreground_color: root.rgb(250, 87, 55)
                     
@@ -98,9 +102,10 @@
                         rectangle: 0, self.y, root.width, self.height
                             
             TextInput:
+                id: addr
                 size_hint: (.7, 1)
                 multiline: True
-                text: "300 Meadow Lakes East Windsor NJ 08520"
+                text: root.selected[root.temp_key]['address']
                 font_size: 25
                 background_color: root.rgb(13, 59, 102)
                 foreground_color: root.rgb(250, 87, 55)
@@ -131,10 +136,11 @@
                         rectangle: 0, self.y, root.width, self.height
                             
             TextInput:
+                id: wage
                 size_hint: (.7, 1)
                 multiline: True
                 input_filter: 'float'
-                text: "00.00"
+                text: str(root.selected[root.temp_key]['wage'])
                 font_size: 25
                 background_color: root.rgb(13, 59, 102)
                 foreground_color: root.rgb(250, 87, 55)
@@ -152,6 +158,7 @@
                 background_down: ''
                 size_hint_x: 0.3
                 pos_hint: {'left': 0}
+                on_release: root.change_screen(-1) 
                     
                 Image:
                     source: 'assets/left-arrow.png'
@@ -169,6 +176,7 @@
                 background_down: ''
                 size_hint_x: 0.3
                 pos_hint: {'right': 1}
+                on_release: root.change_screen(1) 
                     
                 Image:
                     source: 'assets/right-arrow.png'

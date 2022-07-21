@@ -18,7 +18,7 @@ def read_data(db):
            
     return final
     
-    
+
 def create_meeting(db, entry):
     """
     ::note.. entry does not have address yet, we add it here
@@ -140,6 +140,13 @@ def unique_locations(db):
         places[location_name] = locs[location_name]['address']
         
     return places
+    
+def all_location_info(db):
+    """
+    return COMPLETE info about each location including wage
+    """
+    locs = db.read_path('locations')
+    return locs
     
 def num_unique_locations(db, data=None):
     """

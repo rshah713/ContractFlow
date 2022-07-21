@@ -19,7 +19,6 @@ class EditMeeting(Screen):
 
     def __init__(self, **kwargs):
         super(EditMeeting, self).__init__(**kwargs)
-        print('\n\n\n\n\n\n\n', kwargs)
         self.INVALID = True # will be changed in on_enter
         self.selected = ["<start_time>", "<end_time>", "No data to display", "<location>", "No data"] # smthn to keep the __init__ created lables from complaining
         
@@ -56,9 +55,12 @@ class EditMeeting(Screen):
         """
         
         if len(self.entries) == 0:
-            self.INVALID = True # will be changed in on_enter
+            self.INVALID = True
             self.selected = ["<start_time>", "<end_time>", "No data to display", "<location>", "No data"]
             self.update_screen_labels()
+            # if we recognize we deleted all the events we refresh dashboard to bring the calendar img
+            self.manager.remove_widget(self.manager.get_screen('dashboard'))
+            self.manager.add_widget(Dashboard())
             return
         elif self.selected_index + ind < 0:
             self.selected_index += len(self.entries) - 1
