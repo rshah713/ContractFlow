@@ -67,7 +67,6 @@ class Login(Screen):
         username = real_username[len('debug:'):] + '@yahoo.com' # we add @... so save_username logic works
         self.manager.get_screen('settings').save_username(username)
         real_username = self.manager.get_screen('settings').get_username()
-        print(real_username)
         App.get_running_app().set_firebase_inst(real_username, admin_auth()) # create global firebase inst
         
         
