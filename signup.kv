@@ -1,0 +1,148 @@
+<Signup>:
+    name: 'signup'
+        
+    ############################## SIGNUP LABEL ##############################
+    GridLayout:
+        cols: 1
+        
+        pos_hint: {"top": 1}
+        size_hint_y: 0.2
+        padding: 0, 25, 0, 0
+        
+        Label:
+            text: "Sign Up"
+            font_size: 100
+            font_name: 'Roboto-Bold'
+            color: root.rgb(13, 59, 102)
+                
+    BoxLayout:
+        errorlbl: errorlbl
+        orientation: 'vertical'
+            
+        pos_hint: {"top": .8}
+        size_hint_y: .3
+        ############################## EMAIL ##############################
+        Label:
+            text: "Email:"
+            color: root.rgb(13, 59, 102)
+            font_size: 20
+            size_hint: (.1, .05)
+            pos_hint: {'x': 0.15}
+        TextInput:
+            id: email_textinput
+            size_hint: (.7, .05)
+            pos_hint: {'x': 0.15}
+            multiline: False
+            text: "veer@hotmail.com"
+            background_color: root.rgb(13, 59, 102, alpha=0)
+            foreground_color: root.rgb(250, 87, 55)
+                
+            canvas.after:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+                        
+        
+                
+        ############################## PASSWORD ##############################
+                
+        Label:
+            text: "Password:"
+            color: root.rgb(13, 59, 102)
+            font_size: 20
+            size_hint: (.1, .05)
+            pos_hint: {'x': 0.15}
+        TextInput:
+            id: pw_textinput
+            size_hint: (.7, .05)
+            pos_hint: {'x': 0.15}
+            password: True
+            multiline: False
+            text: ""
+            background_color: root.rgb(13, 59, 102, alpha=0)
+            foreground_color: root.rgb(250, 87, 55)
+                
+            canvas.after:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+                        
+       
+        ############################## CONFIRM PASSWORD ##############################
+                
+        Label:
+            text: "Confirm Password:"
+            color: root.rgb(13, 59, 102)
+            font_size: 20
+            size_hint: (.1, .05)
+            pos_hint: {'x': 0.2}
+        TextInput:
+            id: pw_confirm_textinput
+            size_hint: (.7, .05)
+            pos_hint: {'x': 0.15}
+            password: True
+            multiline: False
+            text: ""
+            background_color: root.rgb(13, 59, 102, alpha=0)
+            foreground_color: root.rgb(250, 87, 55)
+                
+            canvas.after:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+                        
+
+        ############################## SIGNUP BUTTON ##############################    
+        
+    GridLayout:
+        cols: 1
+        pos_hint: {"bottom": 0}
+        size_hint_y: 0.4 # signup label (.2 size_hint_y) + boxlayout (.3 size_hint_y) + RESERVED GAP (.1 size_hint_y)
+        
+        FloatLayout:
+            Button:
+                size_hint: (.4, .4)
+                pos_hint: {'center_x': 0.5, 'top': 1}
+                on_release:
+                    root.manager.current = 'login' if root.valid_credentials(email_textinput, pw_textinput, pw_confirm_textinput) else 'signup'
+
+
+                color: root.rgb(13, 59, 102)
+                background_normal: '' #https://stackoverflow.com/a/49100826/12514570
+                text: 'Signup'
+                font_size: 45
+
+                background_color: root.rgb(237, 151, 76)
+                background_down: 'assets/orange_button_down.png'
+
+                canvas.before:
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 3
+                        rectangle: self.x, self.y, self.width, self.height
+                            
+        ############################## Error Button ##############################
+            Label:
+                id: errorlbl
+                text: ''
+                color: root.rgb(255, 0, 0)
+                font_size: 15
+                pos_hint: {'center_y': 0.3}
+
+                            
+        ############################## ALREADY HAVE ACCOUNT ##############################
+                        
+        Button:
+            text: 'Already have an account? Login'
+            color: root.rgb(13, 59, 102)
+            background_normal: ''
+            background_color: root.rgb(13, 59, 102, alpha=0)
+            on_press: root.manager.current = 'login'
+

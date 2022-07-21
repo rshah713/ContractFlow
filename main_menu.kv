@@ -1,0 +1,86 @@
+#: import EditMeeting edit_meeting.EditMeeting
+<MainMenu>:
+    # -------------------- MENU -------------------- #
+    name: 'main menu'
+        
+    
+        
+    GridLayout:
+        size: root.size
+        cols: 1
+        
+        
+        Label:
+            text: 'Menu'
+            color: root.rgb(13, 59, 102)
+            font_size: 64
+                
+        Button:
+            text: "New Meeting"
+            color: root.rgb(13, 59, 102)
+            font_size: 48
+            background_normal: ''
+            background_down: 'assets/orange_button_down.png'
+            background_color: root.rgb(237, 151, 76)
+            on_release:
+                app.root.current = 'add meeting'
+        Button:
+            text: "Edit Meeting"
+            color: root.rgb(13, 59, 102)
+            font_size: 48
+            background_normal: '' 
+            background_down: 'assets/orange_button_down.png'
+            background_color: root.rgb(245, 213, 95)
+            on_release:
+                app.root.current = 'edit meeting'
+        Button:
+            text: "Manage Locations"
+            color: root.rgb(13, 59, 102)
+            font_size: 48
+            background_normal: ''
+            background_down: 'assets/orange_button_down.png'
+            background_color: root.rgb(237, 151, 76)
+            on_release:
+                app.root.current = 'manage location'
+
+        Button:
+            text: "Statistics"
+            color: root.rgb(13, 59, 102)
+            font_size: 48
+            background_normal: ''
+            background_down: 'assets/orange_button_down.png'
+            background_color: root.rgb(245, 213, 95)
+            on_release:
+                app.root.current = 'statistics'
+                
+        Button:
+            text: "Settings"
+            color: root.rgb(13, 59, 102)
+            font_size: 48
+            background_normal: ''
+            background_down: 'assets/orange_button_down.png'
+            background_color: root.rgb(237, 151, 76)
+            on_release:
+                app.root.current = 'settings'
+            
+        FloatLayout:
+            
+            Button:
+                size_hint: .3, .3
+                pos_hint: {'center_x' :0.5, 'center_y' : 0.5}
+                text: "Cancel"
+                color: root.rgb(13, 59, 102)
+                font_size: 37
+                background_normal: ''
+                background_color: root.rgb(250, 87, 55)
+                on_release:
+                    #root.manager.transition.direction = 'down'
+                    app.root.current = 'dashboard'
+                    
+                    
+                canvas.before:
+                    Color:
+                        rgb: root.rgb(13, 59, 102)
+                    Line:
+                        width: 3
+                        rectangle: self.x, self.y, self.width, self.height
