@@ -127,38 +127,6 @@ class Firebase():
             self.log_error(str(e), path)
             
             
-    def delete_path(self, path):
-        req_url = self.BASE_URL + 'users/' + self.username + '/' + path + '/.json' # .json can also be used (no difference)
-        
-        req_url = req_url.replace(' ', "%20")
-        
-        auth = {'auth' : self.credentials['idToken']}
-        auth = parse.urlencode(auth)
-        req_url += '?' + auth
-        
-        req = request.Request(req_url, method="DELETE")
-        
-        try:
-            resp = request.urlopen(req)
-            return resp.code
-        except error.HTTPError as err:
-            self.log_error(str(err), path)
-            print(err)
-        except client.InvalidURL as err:
-            """ printing err returns a long msg w/ path alr in there
-            so we save shorthand name (https://stackoverflow.com/a/58045927/12514570)
-            and the msg IS the str(err)
-            """
-            
-            module = err.__class__.__module__
-            if module is None or module == str.__class__.__module__:
-                errorName = err.__class__.__name__
-            errorName =  module + '.' + err.__class__.__name__
-            
-            self.log_error(errorName, str(err))
-            
-        except Exception as e:
-            self.log_error(str(e), path)
         
         
     def log_error(self, err, desc):

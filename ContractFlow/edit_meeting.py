@@ -10,16 +10,15 @@ from datetime import date
 
 from menu import BottomMenu
 from dashboard import Dashboard
-from util import read_data, delete_entry
+from util import read_data, process_data, delete_entry
+
 
 
 kv = Builder.load_file('edit_meeting.kv')
-
 class EditMeeting(Screen):
 
     def __init__(self, **kwargs):
         super(EditMeeting, self).__init__(**kwargs)
-        print('\n\n\n\n\n\n\n', kwargs)
         self.INVALID = True # will be changed in on_enter
         self.selected = ["<start_time>", "<end_time>", "No data to display", "<location>", "No data"] # smthn to keep the __init__ created lables from complaining
         
@@ -34,7 +33,6 @@ class EditMeeting(Screen):
         else:
             self.INVALID = False
             self.selected = self.entries[self.selected_index] # current selected entry to display
-        self.update_screen_labels()
         
     
     def populate_data(self):
@@ -45,7 +43,7 @@ class EditMeeting(Screen):
         entries = read_data(self.firebase)
         master_entries = []
         for entry in entries:
-            master_entries.append(entry)
+            master_entries.append(process_data(entry))
             
         return master_entries
         
@@ -54,21 +52,14 @@ class EditMeeting(Screen):
         """
         :ind +1 or -1 which will be applied to index
         """
-        
-        if len(self.entries) == 0:
-            self.INVALID = True # will be changed in on_enter
-            self.selected = ["<start_time>", "<end_time>", "No data to display", "<location>", "No data"]
-            self.update_screen_labels()
-            return
-        elif self.selected_index + ind < 0:
+        if self.selected_index + ind < 0:
             self.selected_index += len(self.entries) - 1
         elif self.selected_index + ind >= len(self.entries):
             self.selected_index = 0
         else:
             self.selected_index += ind
-        
+            
         self.selected = self.entries[self.selected_index]
-        
         self.update_screen_labels()
         
     def update_screen_labels(self):
@@ -87,6 +78,3 @@ class EditMeeting(Screen):
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'up'
         BottomMenu.save_last_screen('edit meeting')
-
-
-
