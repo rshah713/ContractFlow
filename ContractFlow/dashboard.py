@@ -18,7 +18,7 @@ from kivy.core.window import Window
 
 from menu import BottomMenu
 from util import content_present, num_unique_locations
-from util import read_data, process_data
+from util import read_data
 from util import create_new_user
 
 from datetime import date

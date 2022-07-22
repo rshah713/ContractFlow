@@ -55,20 +55,14 @@ def create_meeting(db, entry):
     
     
     
-    
-
-def process_data(entry):
+def delete_meeting(db, *args):
+    """ when we actually know apptNum to delete
+    as opposed to delete_entry when we gotta attribute match
+    - invoked from manage_locations
     """
-    return original entry list split into
-    [start time, end time, date, place name, place address]
-    """
-    split = entry.split(',')[:4]
-    # if we run split off comma, it also seperates address which naturally has commas
-    # for this reason we split everything then join the address at the end back into a string, then append to split variable
-    address = ''.join(entry.split(',')[4:])[1:]
-    split.append(address)
-    return split
-    
+    for apptNum in args:
+        db.delete_path(f'meetings/{apptNum}')
+        
     
 def delete_entry(db, entry):
         ### to delete node from JSON
@@ -117,9 +111,10 @@ def delete_entry(db, entry):
             prevAppt = 'appt' + str(apptNum-1)
             db.patch_path('meetings', {'lastAppt': prevAppt})
         
+        
+def delete_location(db, location):
+    db.delete_path(f'locations/{location}')
     
-
-
 def content_present(db):
     """
     return the amount of meetings that day
@@ -160,6 +155,22 @@ def num_unique_locations(db, data=None):
     
     # ToDo: implement once we figure out read_data()
     return len(unique_locations(db))
+    
+def get_location_used(db):
+    """ return a dict {appt#: location}
+    for every appointment & it's corresponding location
+    aka giving the actively used locations & how many times
+    """
+    meetings = db.read_path('meetings')
+    
+    del meetings['lastAppt']
+    
+    locs_used = {}
+    for apptNum in meetings:
+        locs_used[apptNum] = meetings[apptNum]['location']
+        
+    return locs_used
+    
     
 def get_loc_address(db, loc_name):
     locs = unique_locations(db)
