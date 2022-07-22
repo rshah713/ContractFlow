@@ -7,7 +7,7 @@ from kivy.uix.screenmanager import Screen
 
 
 from menu import BottomMenu
-from util import all_location_info, get_location_used, delete_meeting, content_present, delete_location
+from util import all_location_info, get_location_used, delete_meeting, content_present, delete_location, create_location
 
 
 class ManageLocation(Screen):
@@ -127,10 +127,41 @@ class ManageLocation(Screen):
         if len(self.keys) == 1:
             self.INVALID = True
 
-    
+    def save_location(self):
+        # we have to change everywhere if name changed (e.g. name is what links it everywhere)
+        # otherwise we can send a PATCH
+        
+        
+        #
+        if self.ids.loc_name.text != self.keys[self.selected_index]: # if the names dont match
+        
+            # edit and PATCH /meetings/appt#
+            old_name = self.keys[self.selected_index]
+            new_name = self.ids.loc_name.text
+            
+            locs_used = get_location_used(self.firebase)
+            if old_name in locs_used.values():
+                for apptNum, loc in locs_used.items():
+                    if loc == old_name:
+                        self.firebase.patch_path(f'meetings/{apptNum}', {'location': new_name})
+            
+            data = {
+                'address': self.ids.addr.text,
+                'wage': float(self.ids.wage.text)
+            }
+            
+            create_location(self.firebase, new_name, data) # have to create first so we never have 0 locs (bc we dont wanna remove loc then add new one)
+            self.delete_location()
+            
+        else:
+            data = {
+                'address': self.ids.addr.text,
+                'wage': float(self.ids.wage.text)
+            }
+            create_location(self.firebase, self.keys[self.selected_index], data)
+            #self.firebase.patch_path(f'locations/{self.keys[self.selected_index]}', data)
         
     def update_screen(self):
-        print(self.INVALID)
         self.ids.loc_name.text = self.keys[self.selected_index]
         self.ids.addr.text = self.selected['address']
         self.ids.wage.text = str(self.selected['wage'])

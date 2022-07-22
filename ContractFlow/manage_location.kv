@@ -196,6 +196,8 @@
                 background_normal: ''
                 background_color: root.rgb(237, 151, 76)
                 background_down: 'assets/orange_button_down.png'
+                on_release:
+                    root.save_location()
                 canvas.before:
                     Color:
                         rgb: root.rgb(13, 59, 102)

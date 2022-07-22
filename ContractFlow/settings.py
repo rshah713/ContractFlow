@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 
 
 from menu import BottomMenu
+from datetime import datetime
+from util import delete_account
 
 
 
@@ -22,6 +24,7 @@ class MySettings(Screen):
         self.username = ''
         
     def on_enter(self, *args):
+        self.firebase = App.get_running_app().get_firebase_connection()
         self.ids.username.text = self.username
         
         
@@ -46,5 +49,9 @@ class MySettings(Screen):
         self.manager.transition.direction = 'down'
         BottomMenu.save_last_screen('settings')
         
+    def request_data_deletion(self):
+        self.firebase.log_error('AccountDeletion', datetime.now().strftime('%B %d at %I:%M %p'))
+        delete_account(self.firebase)
+        self.manager.current = 'login'
 
 kv = Builder.load_file('my_settings.kv')

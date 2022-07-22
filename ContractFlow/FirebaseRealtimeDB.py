@@ -192,6 +192,24 @@ class Firebase():
         
         return loader.code
         
+    def delete_account(self):
+        ENDPOINT_URL = "https://identitytoolkit.googleapis.com/v1/accounts:delete?key=" + self.API_KEY
+        headers = {"content-type": "application/json; charset=UTF-8" } # WE NEED HEADERS
+        user_payload = {'idToken': self.credentials['idToken']}
+        user_payload = json.dumps(user_payload).encode() #dict --> json --> bytes/json
+        req = request.Request(ENDPOINT_URL, data=user_payload, headers=headers, method="POST")
+        
+        try:
+            return_load = request.urlopen(req)
+            return_load = return_load.read().decode('utf-8')
+            return_load = json.loads(return_load) # json string --> python dict
+        except error.HTTPError as err:
+            print("ERROR DELETING ACCOUNT", str(err))
+            return_load = {}
+            
+        return return_load
+        
+        
 
 def sign_up_with_email(email, password):
     """ create user w/ email + password via REST
@@ -251,3 +269,4 @@ def login_with_email_password(email, password):
         new_user_json = {}
         
     return new_user_json
+

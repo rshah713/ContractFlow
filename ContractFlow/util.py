@@ -18,6 +18,13 @@ def read_data(db):
            
     return final
     
+def create_location(db, loc_name, details):
+    """
+    loc_name: name of location (will overwrite if already exists)
+    details: dict {'address': '321 ehfs...', 'wage': 50.5}
+    """
+    db.patch_path(f'locations/{loc_name}', details)
+    
 
 def create_meeting(db, entry):
     """
@@ -53,7 +60,7 @@ def create_meeting(db, entry):
     }
     db.patch_path(f'meetings/{nextAppt}', data)
     
-    
+
     
 def delete_meeting(db, *args):
     """ when we actually know apptNum to delete
@@ -219,3 +226,5 @@ def create_new_user(db):
             "wage": 0})
     db.patch_path('meetings', {'lastAppt': 'appt0'})
 
+def delete_account(db):
+    return db.delete_account()
