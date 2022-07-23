@@ -13,6 +13,8 @@ An iOS App to manage workflow for contractors.
 3. Create `auth.py` in `authentication`
 4. Store your Firebase Web API Key in a constant called `API_KEY`
     - Project Settings --> General --> Web API Key
+5. Store your Firebase Project URL in a constant called `BASE_URL`
+    - "https://<your-project-name>-default-rtdb.firebaseio.com/"
 5. Follow the steps in Usage
 
 
