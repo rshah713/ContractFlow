@@ -10,6 +10,7 @@ from kivy.uix.screenmanager import Screen
 from menu import BottomMenu
 from util import login
 
+kv = Builder.load_file('login.kv')
 
 class Login(Screen):
     def rgb(self, r, g, b, alpha=1):
@@ -69,7 +70,3 @@ class Login(Screen):
         real_username = self.manager.get_screen('settings').get_username()
         App.get_running_app().set_firebase_inst(real_username, admin_auth()) # create global firebase inst
         
-        
-        
-
-kv = Builder.load_file('login.kv')

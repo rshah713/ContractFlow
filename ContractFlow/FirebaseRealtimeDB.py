@@ -7,6 +7,7 @@ Somewhat low-level as all input is sanitized through util.py wrapper funcs
 so no input validation
 """
 
+import ssl
 import json
 import urllib.request as request
 import urllib.parse as parse
@@ -14,6 +15,8 @@ import urllib.error as error
 from http import client
 from datetime import datetime
 from authentication.auth import API_KEY, BASE_URL
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 class Firebase():
     def __init__(self, username, credentials):
@@ -212,10 +215,11 @@ class Firebase():
         
 
 def sign_up_with_email(email, password):
+    
     """ create user w/ email + password via REST
     https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
     """
-    
+    print("\n\n\nSIGNUP")
     ENDPOINT_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + API_KEY
     
     
@@ -245,6 +249,7 @@ def sign_up_with_email(email, password):
     return new_user_json
 
 def login_with_email_password(email, password):
+    print("\n\n\n\nLOGIN")
     ENDPOINT_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY
     
     headers = {"content-type": "application/json; charset=UTF-8" } # WE NEED HEADERS

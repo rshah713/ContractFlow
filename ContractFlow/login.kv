@@ -117,9 +117,18 @@
                 
         ############################## LOGO HERE ##############################        
         Button:
-            text: 'logo here'
-            size_hint_y: .1
-                
+            size_hint_y: .2
+            background_normal: ''
+            background_color: root.rgb(237, 151, 76, alpha=0)
+            background_down:''
+            Image:
+                source: 'assets/LogoDark.png'
+                y: self.parent.y + self.parent.height - self.parent.size[1]
+                x: self.parent.x
+
+                size: self.parent.size
+                allow_stretch: True
+
                 
         Widget:
             size_hint_y: .2

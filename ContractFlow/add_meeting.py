@@ -3,10 +3,20 @@
 
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.utils import platform
 from kivy.uix.screenmanager import Screen
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty, AliasProperty
+
+
+
+if platform == "ios":
+    "https://github.com/kivy-garden/garden.mapview/issues/7"
+    from os.path import join, dirname
+    import kivy.garden
+    kivy.garden.garden_app_dir = join(dirname(__file__), "libs", "garden")
+    
 from kivy.garden.circulardatetimepicker import CircularTimePicker
 
 
