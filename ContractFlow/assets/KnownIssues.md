@@ -6,10 +6,12 @@ A collection of Known Issues identified by the ContractFlow developer team. CF d
 
 ## File an Issue / Password Reset
 
-Don't see your issue? File it [Here](https://www.google.com/).
+
+Don't see your issue? File it [Here](https://forms.gle/hqFUxiabb4gcEFU37).
 Still don't see your issue? Our developer team is working on documenting and fixing your issue :)
 
-Password Reset: Request a PW Reset [Here](https://www.google.com/). 
+Password Reset: Request a PW Reset [Here](https://forms.gle/hqFUxiabb4gcEFU37)
+
 _Disclaimer: Requests are currently human-verified to ensure security and therefore may be denied or take an extended amount of time._
 
 
