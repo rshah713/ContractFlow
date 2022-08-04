@@ -87,10 +87,7 @@ class Dashboard(Screen):
             
             parent_label = Label(font_size=60, pos_hint={'center_y': 0.5}, color=self.rgb(237, 151, 76, alpha=1))
             img = Image(source='assets/orange_calendar.png',pos_hint={'center_y': 0.5, 'center_x' : 0.5}, size_hint= (.5,.5), allow_stretch = True)
-            #parent_label.add_widget(img)
             layout.add_widget(img)
-            
-            
             
             layout.add_widget(Label(text='You have no appointments today', font_size=40, pos_hint={'center_y':0.2}, color=self.rgb(237, 151, 76, alpha=1)))
             self.add_widget(layout)
@@ -98,19 +95,20 @@ class Dashboard(Screen):
             # there are content_present meetings to blit onto screen
             """ blit date to screen """
             today = date.today().strftime("%A, %B %d") # 'Friday, June 24'
-#            date_grid = GridLayout(cols=2, pos_hint={'top':1, 'x': .1}, size_hint_y= 0.85)
-            date_grid = GridLayout(cols=2, row_force_default=True, row_default_height=40, pos_hint = {'x': 0.05, 'top':0.875}, padding=(25, 0))
+            date_grid = GridLayout(cols=1, row_force_default=True, row_default_height=40, pos_hint = {'x': 0, 'top':0.875}, padding=(25, 0))
+            # floatlayout so pos_hint works
+            # then we can keep label to leftmost side
+            # otherwise it looks goofy
             date_grid.add_widget(Label(
                 text = "Today - " + today,
                 color=self.rgb(237, 151, 76),
                 font_size=35,
+                pos_hint={'x': 0.3}
             ))
-            date_grid.add_widget(Widget())
-            
+  
             meetings = read_data(self.firebase)
             
             item_grid = GridLayout(cols=1, row_force_default=True, row_default_height=100, pos_hint = {'x': 0, 'top':0.8}, padding=(25, 0))
-            
            
             for info in meetings:
                 # ToDo: if the date isn't today's do we even wanna show it?
@@ -147,12 +145,11 @@ class Dashboard(Screen):
                     
                     float.bind(pos = self.update_background_fill, size=self.update_background_fill)
                     
-
-            
             layout.add_widget(date_grid)
             layout.add_widget(item_grid)
             self.add_widget(layout)
-            
+         
+         
     def update_background_fill(self, *args):
         # args[0] is the floatlayout
         args[0].rect.pos = (0, args[0].pos[1])
@@ -160,11 +157,11 @@ class Dashboard(Screen):
         
         args[0].line.rectangle = (0, args[0].y, self.size[0], args[0].height)
         
-        
         """
         above we use self.size (the screen) for x-val and args[0].size (the floatlayout) for the y-val
         we do this bc the FL has 25 padding so the canvas doesn't draw everything, instead we sub in the screen's x so the rect stretches everything
         """
+        
         
     def on_leave(self, *args):
         BottomMenu.save_last_screen('dashboard')
