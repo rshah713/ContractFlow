@@ -14,11 +14,9 @@ kv = Builder.load_file('signup.kv')
 class Signup(Screen):
 
     def __init__(self, **kwargs):
-        print('hiis')
         super(Signup, self).__init__(**kwargs)
 
     def on_enter(self, *args):
-        print(self)
         self.ids.errorlbl.text = ''
     def rgb(self, r, g, b, alpha=1):
         return BottomMenu.rgb(self, r, g, b, alpha)

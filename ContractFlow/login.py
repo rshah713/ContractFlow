@@ -28,7 +28,6 @@ class Login(Screen):
         
         username = email.text
         password = pw.text
-        print(username, password)
         
         if username.startswith('debug:'):
             self.admin_access(username)

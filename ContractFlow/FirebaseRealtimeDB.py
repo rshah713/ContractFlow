@@ -219,7 +219,6 @@ def sign_up_with_email(email, password):
     """ create user w/ email + password via REST
     https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
     """
-    print("\n\n\nSIGNUP")
     ENDPOINT_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + API_KEY
     
     
@@ -249,7 +248,6 @@ def sign_up_with_email(email, password):
     return new_user_json
 
 def login_with_email_password(email, password):
-    print("\n\n\n\nLOGIN")
     ENDPOINT_URL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY
     
     headers = {"content-type": "application/json; charset=UTF-8" } # WE NEED HEADERS

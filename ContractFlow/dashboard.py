@@ -74,7 +74,6 @@ class Dashboard(Screen):
         # floatlayout of the remaining 'body' not taken up by menu bars is same for both
         layout = FloatLayout(pos_hint={'center_y':0.5}, size_hint_y= 0.85)
         meeting_count = cnt_present
-        print(meeting_count)
         if meeting_count == 0:
             # there is no content: switch to no meeting layout
             """
@@ -109,7 +108,6 @@ class Dashboard(Screen):
             date_grid.add_widget(Widget())
             
             meetings = read_data(self.firebase)
-            print(meetings)
             
             item_grid = GridLayout(cols=1, row_force_default=True, row_default_height=100, pos_hint = {'x': 0, 'top':0.8}, padding=(25, 0))
             

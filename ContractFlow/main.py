@@ -8,7 +8,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.screenmanager import Screen
 
-
+# must be run before kivy.garden imports in add_meeting
 if platform == "ios":
     "https://github.com/kivy-garden/garden.mapview/issues/7"
     from os.path import join, dirname
@@ -28,6 +28,7 @@ from signup import Signup
 import ssl
 
 from FirebaseRealtimeDB import Firebase
+
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
