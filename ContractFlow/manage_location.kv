@@ -70,6 +70,7 @@
 
             TextInput:
                 id: loc_name
+                font_size: 30
                 size_hint: (.7, 1)
                 multiline: False
                 text: root.temp_key
@@ -104,9 +105,9 @@
             TextInput:
                 id: addr
                 size_hint: (.7, 1)
-                multiline: True
+                multiline: False
                 text: root.selected[root.temp_key]['address']
-                font_size: 25
+                font_size: 30
                 background_color: root.rgb(13, 59, 102)
                 foreground_color: root.rgb(250, 87, 55)
                             
@@ -138,10 +139,10 @@
             TextInput:
                 id: wage
                 size_hint: (.7, 1)
-                multiline: True
+                multiline: False
                 input_filter: 'float'
                 text: str(root.selected[root.temp_key]['wage'])
-                font_size: 25
+                font_size: 30
                 background_color: root.rgb(13, 59, 102)
                 foreground_color: root.rgb(250, 87, 55)
         
