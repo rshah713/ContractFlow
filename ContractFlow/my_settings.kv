@@ -3,7 +3,7 @@
     username: username
     
     GridLayout:
-        pos_hint: {'top': 0.9}
+        pos_hint: {'top': .9}
         username: username
         cols: 1
         
@@ -81,6 +81,22 @@
         Widget:
         Widget:
         Widget:
+            
+            
+    FloatLayout:
+        pos_hint: {"top": .2}
+        size_hint_y: .1
+            
+        Label:
+            
+            color: root.rgb(13, 59, 102)
+            size: self.parent.size
+            pos: self.parent.pos
+            text: "Made with love and code by [ref=rohan][color=26438b][b]Rohan Shah[/b][/color][/ref]"
+            markup: True
+            on_ref_press:
+                import webbrowser
+                webbrowser.open("https://www.github.com/rshah713")
             
             
     BottomMenu:
