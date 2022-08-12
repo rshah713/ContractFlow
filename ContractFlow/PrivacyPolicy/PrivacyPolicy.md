@@ -1,6 +1,7 @@
 # ContractFlow Privacy Policy
 
 _Effective August 11, 2022_
+Written and maintained in accordance with [App Store Review Guideline 5.1](https://developer.apple.com/app-store/review/guidelines/#5.1)
 
 ## What is the Privacy Policy and what does it cover?
 
