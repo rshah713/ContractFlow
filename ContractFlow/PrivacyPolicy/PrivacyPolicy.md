@@ -29,4 +29,24 @@ Want to delete your data? Open ContractFlow --> Menu --> Settings --> Delete My 
 ## Legal Compliance
 _Note: The following section is not written by a licensed lawyer. This section is written by the app developer in compliance with various government policies._
 
-### ContractFlow supports [GDPR]() and [CCPA]
+### ContractFlow supports [GDPR](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679) and [CCPA](https://oag.ca.gov/privacy/ccpa)
+
+General Data Protection Regulation [(GDPR)](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679): GDPR creates obligations on data controllers and processors. Our backend system via Firebase acts as the "controller" for GDPR and means that data is under our customer's control. Customers are responsible for obligations like fulfilling their rights with respect to their personal data or information.
+ 
+California Consumer Privacy Act [(CCPA)](https://oag.ca.gov/privacy/ccpa): CCPA refers to us as the "business" for any personal data or information in end-users. Customers are responsible for obligations like fulfilling their rights with respect to their personal data or information.
+
+### ContractFlow backend supports ISO Policies
+
+The following standards are published jointly by the International Organization for Standardization and the International Electrotechnical Commission. The standards refer to the required practices for how to manage information security. 
+
+ContractFlow through Firebase holds the following ISO standards: 
+-  [ISO 27001](https://firebase.google.com/static/downloads/gdpr/JUNE2022_Firebase_ISO_27001.pdf)
+
+### ContractFlow backend supports SOC Policies
+
+The following System and Organization Controls (SOC) reports are published by the The American Institute of Certified Public Accountants.
+
+ContractFlow through Firebase holds the following SOC standards:
+- [SOC 1](https://us.aicpa.org/interestareas/frc/assuranceadvisoryservices/aicpasoc1report)
+- [SOC 2](https://us.aicpa.org/interestareas/frc/assuranceadvisoryservices/aicpasoc2report)
+- [SOC 3](https://us.aicpa.org/interestareas/frc/assuranceadvisoryservices/aicpasoc3report)
