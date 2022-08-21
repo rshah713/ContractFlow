@@ -22,6 +22,7 @@ from util import read_data
 from util import create_new_user
 
 from datetime import date
+from datetime import datetime
 
 
 
@@ -112,8 +113,12 @@ class Dashboard(Screen):
            
             for info in meetings:
                 # ToDo: if the date isn't today's do we even wanna show it?
+                # Solved: cleanest solution too !!!
+                #   - util.content_present only returns if it's today's meeting
+                #   - so Dashboard just thinks we have no meeting
+                #   - and other layout is triggered
+                # cuz if we do it here it's the wrong layout in if-else
                 
-                #float = FloatLayout(pos=item_grid.pos, size=item_grid.size)
                 float = FloatLayout()
                 float.add_widget(Label(
                     text = info[0] + '\n' + info[1].strip(),
