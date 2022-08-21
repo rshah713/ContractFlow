@@ -103,6 +103,7 @@ class AddMeeting(Screen):
         if date is not None:
             self.today = date
             self.ids.workdate.text = self.today
+            print("\n\nDATE IS NOT NONE\n\n")
         if start is not None:
             self.ids.starttime.text = start
         if finish is not None:

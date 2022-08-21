@@ -327,4 +327,3 @@ class DayNumButton(DayButton):
 
 class DayNumWeekendButton(DayButton):
     pass
-

@@ -127,10 +127,9 @@ def content_present(db):
     return the amount of meetings that day
     """
     apptNum = db.read_path('meetings')
-    apptNum = apptNum['lastAppt'] # 'appt13'
-    apptNumActualNumber = int(apptNum[len('appt'):]) # 13
-    
-    return apptNumActualNumber
+    apptNum = apptNum['lastAppt']
+    apptNum = int(apptNum[len('appt'):])
+    return apptNum
     
 def unique_locations(db):
     """
