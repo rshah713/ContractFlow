@@ -63,7 +63,8 @@ _Steps to Recreate_:
         - ex. 5 locations set up, 3 being used
     3. Dashboard label will incorrectly report number of locations set up
         - ex. Dashboard reports 5 as opposed to 3 being actively used
-            
+        
+- [x] Fixed by [`e8613c4`](https://github.com/rshah713/ContractFlow/commit/e8613c43638de40ce38867b6b567fd60da27d793)
 ------------------------
 
 ### Editing Meeting & Cancelling will Delete Meeting
