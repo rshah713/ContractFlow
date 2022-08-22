@@ -17,6 +17,8 @@ class Login(Screen):
         return BottomMenu.rgb(self, r, g, b, alpha)
         
     def on_pre_leave(self, *args):
+        import sys
+        print(sys.version)
         self.manager.transition.direction = 'up'
         
     def login(self, email, pw):

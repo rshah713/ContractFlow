@@ -1,10 +1,17 @@
 from FirebaseRealtimeDB import sign_up_with_email, login_with_email_password
-from datetime import datetime
+from datetime import datetime, date
 
 def read_data(db):
-    """open the file, seperate each entry, and return it
+    """
+    ALL meetings in the DB, formatted as below
+    
+    open the file, seperate each entry, and return it
         return original entry list split into
-    [start time, end time, date, place name, place address]"""
+    [start time, end time, date, place name, place address]
+    
+    :note: mainly used by edit_meeting which needs all of them
+    :note: dashboard uses read_data_for_today()
+    """
     
     final = []
     meets = db.read_path('meetings')
@@ -16,7 +23,40 @@ def read_data(db):
            get_loc_address(db, curr['location']) ]
            )
            
+           
     return final
+    
+def read_data_for_today(db):
+    """
+    return the meetings by today's DATE
+    only used by Dashboard()
+    
+    :note: edit_meeting will ask for entire meetings list from read_data
+    """
+    all_meetings = read_data(db)
+    today_meetings = []
+    for meeting in all_meetings:
+        # loop thru all meetings
+        # if it's today we keep otherwise skip
+            # - convert 'July 13' --> datetime object
+            # compare against datetime.now() datetime obj
+        meeting_date = meeting[2]
+        meeting_datetime_obj = datetime.strptime(meeting_date, "%B %d")
+        meeting_datetime_obj = meeting_datetime_obj.date()
+        
+        """
+        when we convert from "%B %d" (%month %date),
+        it defaults year to 1900,
+        so we manually replace the year to current year
+        which is what datetime.now() has
+        so then we r only comparing "%B %d" (%month %date)
+        """
+        meeting_datetime_obj = meeting_datetime_obj.replace(year=date.today().year)
+        today_datetime_obj = datetime.now().date()
+        if meeting_datetime_obj ==  today_datetime_obj:
+            today_meetings.append(meeting)
+        # ToDo: if we ever do datesorting this is probably the place
+    return today_meetings
     
 def create_location(db, loc_name, details):
     """
@@ -126,10 +166,7 @@ def content_present(db):
     """
     return the amount of meetings that day
     """
-    apptNum = db.read_path('meetings')
-    apptNum = apptNum['lastAppt']
-    apptNum = int(apptNum[len('appt'):])
-    return apptNum
+    return len(read_data_for_today(db))
     
 def unique_locations(db):
     """
@@ -157,10 +194,6 @@ def num_unique_locations(db, data=None):
     :data optional dict of today's meetings, from which unique_locs will be extracted. if none provided, general unique locs provided
     """
     
-    if data is None:
-        return len(unique_locations(db))
-    
-    # ToDo: implement once we figure out read_data()
     return len(unique_locations(db))
     
 def get_location_used(db):

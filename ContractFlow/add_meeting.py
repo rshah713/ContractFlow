@@ -55,7 +55,6 @@ class AddMeeting(Screen):
             self.update_location_label()
         self.update_label(self.ids.loc) # should always be called self.update_loc_lbl()
 
-        
     def rgb(self, r, g, b, alpha=1):
         return BottomMenu.rgb(self, r, g, b, alpha)
         
@@ -72,22 +71,17 @@ class AddMeeting(Screen):
         except StopIteration:
             self.next_location = self.get_next_location()
             self.location =  next(self.next_location)
-            
     
     def update_label(self, label):
         """ once the label's VALUE (self.location) has been updated,
         button calls this method to actually update the label to match the field
         """
         label.text = self.location
-        
-    
             
     def set_timepicker_mode(self, mode):
         """ set the mode of timepicker so we know what label to update """
         """ :mode either 'start time' or 'end time' """
         self.timergui = TimePicker(self, mode)
-        
-
         
     def add_meeting(self, location, date, start, end):
         create_meeting(self.firebase, [start, end, date, location])
@@ -103,7 +97,6 @@ class AddMeeting(Screen):
         if date is not None:
             self.today = date
             self.ids.workdate.text = self.today
-            print("\n\nDATE IS NOT NONE\n\n")
         if start is not None:
             self.ids.starttime.text = start
         if finish is not None:

@@ -22,6 +22,7 @@ from util import read_data
 from util import create_new_user
 
 from datetime import date
+from util import read_data_for_today
 
 
 
@@ -106,13 +107,18 @@ class Dashboard(Screen):
                 pos_hint={'x': 0.3}
             ))
   
-            meetings = read_data(self.firebase)
+            meetings = read_data_for_today(self.firebase)
+            print(meetings)
             
             item_grid = GridLayout(cols=1, row_force_default=True, row_default_height=100, pos_hint = {'x': 0, 'top':0.8}, padding=(25, 0))
            
             for info in meetings:
                 # ToDo: if the date isn't today's do we even wanna show it?
-                
+                # Solved: cleanest solution too !!!
+                #   - util.content_present only returns if it's today's meeting
+                #   - so Dashboard just thinks we have no meeting
+                #   - and other layout is triggered
+                # cuz if we do it here it's the wrong layout in if-else
                 #float = FloatLayout(pos=item_grid.pos, size=item_grid.size)
                 float = FloatLayout()
                 float.add_widget(Label(

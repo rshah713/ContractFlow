@@ -88,6 +88,7 @@ class DatePicker(TextInput):
         super(DatePicker, self).__init__(*args, **kwargs)
         
         DatePicker.addcls = addcls
+        self.addcls = addcls
         self.touch_switch = touch_switch
         self.init_ui()
         
