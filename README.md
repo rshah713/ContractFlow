@@ -17,7 +17,14 @@ An iOS App to manage workflow for contractors.
     - Project Settings --> General --> Web API Key
 5. Store your Firebase Project URL in a constant called `BASE_URL`
     - "https://<your-project-name>-default-rtdb.firebaseio.com/"
-5. Follow the steps in Usage
+6. Install Kivy-Garden dependencies
+    ```
+    garden install circularlayout
+    garden install circulardatetimepicker
+    ```
+    - If you get `zsh: command not found: garden`, please [install kivy-garden](https://kivy-garden.github.io/#legacygardentoolgeneralusageguidelines)
+    
+7. Follow the steps in Usage
 
 
 ### Usage
