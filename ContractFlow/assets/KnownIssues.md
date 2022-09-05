@@ -95,7 +95,7 @@ _Steps to Recreate_:
     1. Menu --> Settings --> Sign Out
     2. Sign in with new account
         
-
+- [x] Fixed by [`901e8e2`](https://github.com/rshah713/ContractFlow/commit/901e8e2f8684bf0788f259bf2d706cdf34444194)
 ------------------------
 
 ### Forgot Password?
