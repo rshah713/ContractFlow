@@ -32,7 +32,14 @@ class Dashboard(Screen):
     def __init__(self, **kwargs):
         super(Dashboard, self).__init__(**kwargs)
         Window.clearcolor = self.rgb(250, 241, 203)
-        
+    
+    def on_pre_enter(self, *args):
+        # if the code-generated FloatLayout exists
+        # wipe it so gen_layout() can recreate from fresh data
+        for child in self.children:
+            if type(child) == FloatLayout:
+                child.canvas.clear()
+            
     def on_enter(self, *args):
         self.manager.transition.direction = 'up'
         
