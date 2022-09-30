@@ -23,8 +23,12 @@ class MySettings(Screen):
         super(MySettings, self).__init__(**kwargs)
         self.username = ''
         
+    def on_pre_enter(self, *args):
+        self.ids.username.font_size = 60
+        
     def on_enter(self, *args):
         self.firebase = App.get_running_app().get_firebase_connection()
+        self.ids.username.font_size -= len(self.username)
         self.ids.username.text = self.username
         
         
