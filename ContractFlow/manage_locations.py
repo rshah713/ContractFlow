@@ -79,7 +79,6 @@ class ManageLocation(Screen):
         self.selected = self.entries[self.keys[self.selected_index]]
         self.update_screen()
         
-        
     def delete_location(self):
         """
         ContractFlow relies on the fact that any locations in `meetings` can be tied to an address (and wage soon) in `locations`
@@ -92,6 +91,7 @@ class ManageLocation(Screen):
         
         appts_to_remove = []
         LOCATION_TO_REMOVE = self.keys[self.selected_index]
+
         if LOCATION_TO_REMOVE in locs_used.values():
             # if they in here we gotta remove these entries
             for apptNum, loc in locs_used.items():
@@ -99,7 +99,6 @@ class ManageLocation(Screen):
                     appts_to_remove.append(apptNum)
                     
         delete_meeting(self.firebase, *appts_to_remove)
-        
         
         # in the event we may need to shift lastAppt down to latest one
         MEETINGS = self.firebase.read_path('meetings')
@@ -110,7 +109,7 @@ class ManageLocation(Screen):
             self.firebase.patch_path('meetings',
                 {
                 'lastAppt': list(MEETINGS.keys())[-1]
-                                     })
+                })
 
         """
         MOST
@@ -131,26 +130,28 @@ class ManageLocation(Screen):
         # we have to change everywhere if name changed (e.g. name is what links it everywhere)
         # otherwise we can send a PATCH
         
+        NEW_NAME = self.ids.loc_name.text
+        OLD_NAME = self.keys[self.selected_index]
         
-        #
-        if self.ids.loc_name.text != self.keys[self.selected_index]: # if the names dont match
+        # If it's the default value don't save it
+        # ToDo: figure better way to store/manage defaults
+        if NEW_NAME == "Enter new location name":
+            return
+
+        if NEW_NAME != OLD_NAME: # if the names dont match
         
             # edit and PATCH /meetings/appt#
-            old_name = self.keys[self.selected_index]
-            new_name = self.ids.loc_name.text
-            
             locs_used = get_location_used(self.firebase)
-            if old_name in locs_used.values():
+            if OLD_NAME in locs_used.values():
                 for apptNum, loc in locs_used.items():
-                    if loc == old_name:
-                        self.firebase.patch_path(f'meetings/{apptNum}', {'location': new_name})
+                    if loc == OLD_NAME:
+                        self.firebase.patch_path(f'meetings/{apptNum}', {'location': NEW_NAME})
             
             data = {
                 'address': self.ids.addr.text,
                 'wage': float(self.ids.wage.text)
             }
-            
-            create_location(self.firebase, new_name, data) # have to create first so we never have 0 locs (bc we dont wanna remove loc then add new one)
+            create_location(self.firebase, NEW_NAME, data) # have to create first so we never have 0 locs (bc we dont wanna remove loc then add new one)
             self.delete_location()
             
         else:
@@ -158,9 +159,8 @@ class ManageLocation(Screen):
                 'address': self.ids.addr.text,
                 'wage': float(self.ids.wage.text)
             }
-            create_location(self.firebase, self.keys[self.selected_index], data)
-            #self.firebase.patch_path(f'locations/{self.keys[self.selected_index]}', data)
-        
+            create_location(self.firebase, OLD_NAME, data)
+            
     def update_screen(self):
         self.ids.loc_name.text = self.keys[self.selected_index]
         self.ids.addr.text = self.selected['address']
