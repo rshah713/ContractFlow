@@ -55,9 +55,9 @@ brew link libtool
 toolchain build python3 kivy
 ```
 
-3. Create the Xcode Project
+3. Create the Xcode Project (where the directory is your source code)
 ```
-toolchain create ContractFlow ~/user/Desktop/ContractFlow/xcode
+toolchain create ContractFlow ~/user/Desktop/ContractFlow
 open contractflow-ios/contractflow.xcodeproj
 ```
 
