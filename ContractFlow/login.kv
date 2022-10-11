@@ -128,7 +128,13 @@
 
                 size: self.parent.size
                 allow_stretch: True
-
-                
-        Widget:
+      
+        Label:
             size_hint_y: .2
+            text: "[ref=forgot]Forgot Password?[/ref]"
+            color: root.rgb(13, 59, 102)
+            pos_hint: {'center_x': 0.5, "y": 1}
+            markup: True
+            on_ref_press:
+                import webbrowser
+                webbrowser.open("https://forms.gle/hqFUxiabb4gcEFU37")
