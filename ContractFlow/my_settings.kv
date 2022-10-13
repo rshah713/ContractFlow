@@ -3,7 +3,7 @@
     username: username
     
     GridLayout:
-        pos_hint: {'top': .9}
+        pos_hint: {'top': .95}
         username: username
         cols: 1
         
@@ -12,13 +12,11 @@
             cols: 2
             padding: 75, 0
             
-            Button:
-                
+            Button:                
                 size_hint: (.5, .3)
                 background_normal: ''
                 background_color: root.rgb(237, 151, 76, alpha=0)
 
-                    
                 Image:
                     source: 'assets/user_profile.png'
                     y: self.parent.y + self.parent.height - self.parent.size[1]
@@ -26,8 +24,6 @@
                      
                     size: self.parent.size
                     allow_stretch: True
-            
-            
             Label:
                 id: username
                 font_name: 'Roboto-Bold'
@@ -35,54 +31,79 @@
                 color: root.rgb(13, 59, 102)
                 text: ''
                     
+        Widget:
+        Widget:
+        Widget:       
                     
-        FloatLayout:
-            Button:
-                pos_hint: {'center_x': 0.5, 'center_y' : 0.2}
-                size_hint: (.3, .3)
-                text: 'Log Out'
-                color: root.rgb(13, 59, 102)
-                    
-                background_normal: '' #https://stackoverflow.com/a/49100826/12514570
-                background_down: 'assets/orange_button_down.png'
-                font_size: 25
-                    
-                background_color: root.rgb(237, 151, 76)
-                on_release: 
-                    root.manager.current = 'login'
-                    
-                canvas.before:
-                    Color:
-                        rgb: root.rgb(13, 59, 102)
-                    Line:
-                        width: 3
-                        rectangle: self.x, self.y, self.width, self.height
-        
-        FloatLayout:
-            
-            Button:
-                pos_hint: {'center_x': 0.5, 'center_y' : 0.9} # keep 0.3 between prev button
-                color: root.rgb(13, 59, 102)
-                size_hint: (.3, .3)
-                text: 'Delete my Data'
-                background_color: root.rgb(250, 87, 55)
-                background_normal: '' #https://stackoverflow.com/a/49100826/12514570
-                background_down: 'assets/orange_button_down.png'
-                on_release: root.request_data_deletion()
-                    
-                font_size: 25
-                canvas.before:
-                    Color:
-                        rgb: root.rgb(13, 59, 102)
-                    Line:
-                        width: 3
-                        rectangle: self.x, self.y, self.width, self.height
+    BoxLayout:
+        orientation: 'vertical'
+        pos_hint: {'top': .7}
+        Button:
+            pos_hint: {'center_x': 0.5}
+            size_hint: (.3, .3)
+            text: 'Log Out'
+            color: root.rgb(13, 59, 102)
+
+            background_normal: '' #https://stackoverflow.com/a/49100826/12514570
+            background_down: 'assets/orange_button_down.png'
+            font_size: 25
+
+            background_color: root.rgb(237, 151, 76)
+            on_release: 
+                root.manager.current = 'login'
+
+            canvas.before:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 3
+                    rectangle: self.x, self.y, self.width, self.height   
+                        
+        Button:
+            pos_hint: {'center_x': 0.5}
+            size_hint: (.3, .3)
+            text: 'Privacy Policy'
+            color: root.rgb(13, 59, 102)
+
+            background_normal: '' #https://stackoverflow.com/a/49100826/12514570
+            background_down: 'assets/orange_button_down.png'
+            font_size: 25
+
+            background_color: root.rgb(237, 151, 76)
+            on_release: 
+                import webbrowser
+                webbrowser.open("https://github.com/rshah713/ContractFlow/blob/main/ContractFlow/PrivacyPolicy/PrivacyPolicy.md")
+
+            canvas.before:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 3
+                    rectangle: self.x, self.y, self.width, self.height
+                        
+        Button:
+            pos_hint: {'center_x': 0.5} # keep 0.3 between prev button
+            color: root.rgb(13, 59, 102)
+            size_hint: (.3, .3)
+            text: 'Delete my Data'
+            background_color: root.rgb(250, 87, 55)
+            background_normal: '' #https://stackoverflow.com/a/49100826/12514570
+            background_down: 'assets/orange_button_down.png'
+            on_release: root.request_data_deletion()
+
+            font_size: 25
+            canvas.before:
+                Color:
+                    rgb: root.rgb(13, 59, 102)
+                Line:
+                    width: 3
+                    rectangle: self.x, self.y, self.width, self.height
+                        
+        Widget:
+        Widget:
+        Widget:
+        Widget:
                 
-        Widget:
-        Widget:
-        Widget:
-            
-            
     FloatLayout:
         pos_hint: {"top": .2}
         size_hint_y: .1
@@ -97,7 +118,6 @@
             on_ref_press:
                 import webbrowser
                 webbrowser.open("https://www.github.com/rshah713")
-            
             
     BottomMenu:
         pos_hint: {"bottom": 1}
