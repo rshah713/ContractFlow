@@ -44,6 +44,14 @@ class MySettings(Screen):
             user = 'ErrorFindingUsername!'
         else:
             user = email[:at_index]
+            
+        ### We have to handle illegal firebase keys
+        # https://groups.google.com/g/firebase-talk/c/vtX8lfxxShk/m/Y0wor69RdAAJ
+        
+        # list of illegal keys: https://stackoverflow.com/a/20363114/12514570
+        # ToDo: replacing '.' w/ '_' means rohan.shah@gmail.com will share data w/ rohan_shah@gmail.com
+        
+        user = user.replace('.', '_').replace('[', '<').replace( ']', '>').replace('$', '!')
         self.username = user
         
     def get_username(self):
