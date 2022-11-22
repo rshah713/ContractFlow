@@ -18,6 +18,13 @@ class Login(Screen):
         
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'up'
+
+    def on_enter(self, *args):
+        # when we first load app screenmanager doesn't
+        # have full details including id's & screename
+        # so if we have a screename, we have id's
+        if self.manager.current_screen.name != '':
+            self.ids.errorlbl.text = ''
         
     def login(self, email, pw):
         """
@@ -47,7 +54,8 @@ class Login(Screen):
         
         if payload == {}:
             # firebase didn't like it
-            email.text = 'EMAIL_NOT_FOUND | INVALID_PASSWORD | USER_DISABLED'
+            self.ids.errorlbl.text = 'EMAIL_NOT_FOUND | INVALID_PASSWORD | USER_DISABLED'
+            email.text = ''
             pw.text = ''
             return False
         

@@ -1,5 +1,6 @@
 <Login>:
     name: 'login'
+    errorlbl: errorlbl
 
         
     ############################## LOGIN LABEL ##############################
@@ -18,6 +19,7 @@
                 
     BoxLayout:
         orientation: 'vertical'
+        errorlbl: errorlbl
             
         pos_hint: {"top": .7}
         size_hint_y: .7
@@ -86,7 +88,7 @@
         Widget:
             size_hint_y: 0.1
                 
-            
+        ############################## DONE BUTTON ##############################    
         Button:
             size_hint: (.3, .2)
             pos_hint: {'center_x': 0.5}
@@ -112,8 +114,14 @@
                     width: 3
                     rectangle: self.x, self.y, self.width, self.height
 
-        Widget:
+        ############################## ERROR LABEL ##############################
+        Label:
+            id: errorlbl
+            text: ""
+            color: root.rgb(255, 0, 0)
+            font_size: 18
             size_hint_y: .2
+            pos_hint: {'center_y': 0.3}
                 
         ############################## LOGO HERE ##############################        
         Button:
