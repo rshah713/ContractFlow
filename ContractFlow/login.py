@@ -41,11 +41,13 @@ class Login(Screen):
             return True
         
         if password == '' or username == '':
-            email.text = 'ERROR: cannot be empty'
+            self.ids.errorlbl.text = 'ERROR: cannot be empty'
+            email.text = ""
             pw.text = ""
             return False
         if username.find('@') == -1:
-            email.text = 'ERROR: Must be valid email'
+            self.ids.errorlbl.text = 'ERROR: Must be valid email'
+            email.text = ""
             pw.text = ""
             return False
         
