@@ -1,10 +1,41 @@
 <Statistics>:
     name: 'statistics'
-    
-    Label:
-        color: 0, 0, 0, 1
-        text: "Coming Soon!"
+
+    ############################## TOP MENU ##############################
+    GridLayout:
+        cols: 1
+        
+        pos_hint: {"top": 1}
+        size_hint_y: 0.1
+        padding: 0, 50, 0, 25
             
+        canvas.before:
+            Color:
+                rgb: root.rgb(237, 151, 76)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+            Color:
+                rgb: root.rgb(13, 59, 102)
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+        
+        Label:
+            text: "Statistics"
+            font_size: 45
+            font_name: 'Roboto-Bold'
+            color: root.rgb(13, 59, 102)
+
+    GridLayout:
+        cols: 1
+        pos_hint: {"top" : .9}
+        size_hint_y: .1
+        
+        Label:
+            color: 0, 0, 0, 1
+            text: "Coming Soon!"
+
             
     BottomMenu:
         pos_hint: {"bottom": 1}
