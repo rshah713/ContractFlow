@@ -53,6 +53,7 @@ class Login(Screen):
         
         
         payload = login(username, password)
+        print(payload)
         
         if payload == {}:
             # firebase didn't like it
