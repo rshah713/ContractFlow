@@ -12,11 +12,6 @@ from random import randrange
 kv = Builder.load_file('statistics.kv')
 
 class Statistics(Screen):
-    def __init__(self, **kwargs):
-        super(Statistics, self).__init__(**kwargs)
-        from kivy.utils import get_color_from_hex as rgb
-        print(repr(rgb('7dac9f')))
-        
     def on_pre_enter(self, *args):
         self.generate_points()
         
