@@ -12,12 +12,16 @@ from random import randrange
 kv = Builder.load_file('statistics.kv')
 
 class Statistics(Screen):
+    def __init__(self, **kwargs):
+        super(Statistics, self).__init__(**kwargs)
+        from kivy.utils import get_color_from_hex as rgb
+        print(repr(rgb('7dac9f')))
+        
     def on_pre_enter(self, *args):
         self.generate_points()
+        
     def on_enter(self, *args):
-        
         self.display_graph()
-        
         
     def generate_points(self, X_MIN=1, X_MAX=50, Y_MIN=0, Y_MAX=100, INTERVAL=10):
         """
@@ -36,9 +40,6 @@ class Statistics(Screen):
             for x_val in range(x_interval, x_interval+x_intervals):
                 y_val = randrange(y_intervals[index], y_intervals[index+1])
                 points.append((x_val, y_val))
-                print((x_val, y_val))
-            print()
-            
         return points
 
     def display_graph(self):
@@ -47,21 +48,20 @@ class Statistics(Screen):
             w/ imports """
         from graph_util import Graph, SmoothLinePlot, BarPlot
         import itertools
-        from math import sin, cos, pi, exp
+        from math import exp
         from random import randrange
-        from kivy.utils import get_color_from_hex as rgb
         from kivy.uix.boxlayout import BoxLayout
         
         boxlayout = BoxLayout(orientation='vertical', pos_hint={"top": .8}, size_hint_y=.7)
         # example of a custom theme
         colors = itertools.cycle([
-            rgb('7dac9f'), rgb('dc7062'), rgb('66a8d4'), rgb('e5b060')])
+            self.rgb(125, 172, 159), self.rgb(220, 112, 98), self.rgb(102, 168, 212), self.rgb(229, 176, 96)])
         graph_theme = {
             'label_options': {
-                'color': rgb('444444'),  # color of tick labels and titles
+                'color': self.rgb(13, 59, 102),  # color of tick labels and titles
                 'bold': True},
-            'tick_color': rgb('808080'),  # ticks and grid
-            'border_color': rgb('808080')}  # border drawn around each graph
+            'tick_color': self.rgb(128, 128, 128),  # ticks and grid
+            'border_color': self.rgb(128, 128, 128)}  # border drawn around each graph
 
         graph = Graph(
             xlabel='ContractFlow Downloads',
@@ -92,7 +92,6 @@ class Statistics(Screen):
                     Y_MIN=int(graph.ymin),
                     Y_MAX=int(graph.ymax),
                     INTERVAL=10)
-        print("\n\n")
         print(plot.points)
         
         plot = SmoothLinePlot(color=next(colors))
