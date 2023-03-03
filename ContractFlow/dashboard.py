@@ -115,7 +115,6 @@ class Dashboard(Screen):
             ))
   
             meetings = read_data_for_today(self.firebase)
-            print(meetings)
             
             item_grid = GridLayout(cols=1, row_force_default=True, row_default_height=100, pos_hint = {'x': 0, 'top':0.8}, padding=(25, 0))
            

@@ -87,7 +87,6 @@ class Statistics(Screen):
                     Y_MIN=int(graph.ymin),
                     Y_MAX=int(graph.ymax),
                     INTERVAL=10)
-        print(plot.points)
         
         plot = SmoothLinePlot(color=next(colors))
         plot.points = [(x, .3*exp(.12*x)) for x in range(int(graph.xmin), int(graph.xmax))]
