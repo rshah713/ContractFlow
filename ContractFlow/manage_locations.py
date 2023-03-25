@@ -5,6 +5,15 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 
+from plyer.utils import platform
+
+# ToDo: Remove after https://github.com/kivy/plyer/pull/750 merge
+if platform == 'ios':
+    from plyer_maps_ios_patch import iOSMaps
+    maps = iOSMaps()
+else:
+    from plyer import maps
+
 
 from menu import BottomMenu
 from util import all_location_info, get_location_used, delete_meeting, content_present, delete_location, create_location
@@ -168,6 +177,9 @@ class ManageLocation(Screen):
         
     def rgb(self, r, g, b, alpha=1):
         return BottomMenu.rgb(self, r, g, b, alpha)
+        
+    def maps_search(self, address):
+        return maps.open_by_address(address)
         
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'down'

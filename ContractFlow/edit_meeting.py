@@ -89,6 +89,3 @@ class EditMeeting(Screen):
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'up'
         BottomMenu.save_last_screen('edit meeting')
-
-
-

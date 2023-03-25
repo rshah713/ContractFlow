@@ -22,10 +22,6 @@ from kivy.logger import Logger
 from kivy import metrics
 from math import log10, floor, ceil
 from decimal import Decimal
-try:
-    import numpy as np
-except ImportError as e:
-    np = None
 
 def identity(x):
     return x

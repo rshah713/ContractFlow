@@ -51,4 +51,3 @@ class Signup(Screen):
         
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'down'
-

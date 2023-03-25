@@ -104,12 +104,29 @@
                             
             TextInput:
                 id: addr
-                size_hint: (.7, 1)
+                size_hint: (.6, 1)
                 multiline: False
                 text: root.selected[root.temp_key]['address']
                 font_size: 30
                 background_color: root.rgb(13, 59, 102)
                 foreground_color: root.rgb(250, 87, 55)
+                    
+            Button:
+                size_hint: (.1, 1)
+                color: root.rgb(13, 59, 102)
+                background_normal: ''
+                background_color: root.rgb(237, 151, 76)
+                background_down: 'assets/orange_button_down.png'
+                on_release:
+                    if not(root.INVALID): root.maps_search(addr.text)
+                    
+                Image:
+                    source: 'assets/map_simple.png'
+                    y: self.parent.y + self.parent.height//4
+                    x: self.parent.x
+
+                    size: self.parent.size[0], self.parent.size[1]//2
+                    allow_stretch: True
                             
                             
         Widget: # blank row
