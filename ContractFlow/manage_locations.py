@@ -32,7 +32,7 @@ class ManageLocation(Screen):
         self.selected = {'Enter new location name': {'address': 'Enter new location address', 'wage': 00.00}} # smthn to keep the __init__ created lables from complaining
         self.temp_key = list(self.selected.keys())[0]
         
-        self.INVALID = True # we can't delete the 'enter new location' entry !!!
+        self.INVALID = True # we can't delete the 'enter new location' entry OR one single entry
         
     def on_enter(self, *args):
         
@@ -45,7 +45,7 @@ class ManageLocation(Screen):
         if len(self.keys) == 1:
             self.INVALID = True # still can't delete 1 entry
         else:
-            self.INVALID = False # ok we got 1 default entry
+            self.INVALID = False # ok we got more than 1 entry
         
     def populate_data(self, mode=None):
         "populate field responsible for all data"
@@ -170,6 +170,10 @@ class ManageLocation(Screen):
             }
             create_location(self.firebase, OLD_NAME, data)
             
+        if len(self.keys) > 1:
+            self.INVALID = False # turn flag off we can
+            
+
     def update_screen(self):
         self.ids.loc_name.text = self.keys[self.selected_index]
         self.ids.addr.text = self.selected['address']
@@ -180,6 +184,7 @@ class ManageLocation(Screen):
         
     def maps_search(self, address):
         return maps.open_by_address(address)
+    
         
     def on_pre_leave(self, *args):
         self.manager.transition.direction = 'down'

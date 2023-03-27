@@ -118,7 +118,8 @@
                 background_color: root.rgb(237, 151, 76)
                 background_down: 'assets/orange_button_down.png'
                 on_release:
-                    if not(root.INVALID): root.maps_search(addr.text)
+                    # CHANGE KEY HERE
+                    if root.keys[root.selected_index] != "Enter new location name": root.maps_search(addr.text)
                     
                 Image:
                     source: 'assets/map_simple.png'
