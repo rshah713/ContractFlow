@@ -29,8 +29,11 @@ An iOS App to manage workflow for contractors.
     garden install circulardatetimepicker
     ```
     - If you get `zsh: command not found: garden`, please [install kivy-garden](https://kivy-garden.github.io/#legacygardentoolgeneralusageguidelines)
-    
-7. Follow the steps in Usage
+7. Install [plyer](https://www.github.com/kivy/plyer) dependency
+    ```
+    pip install plyer
+    ```
+8. Follow the steps in Usage
 
 
 ### Usage
@@ -61,4 +64,10 @@ toolchain create ContractFlow ~/user/Desktop/ContractFlow
 open contractflow-ios/contractflow.xcodeproj
 ```
 
-4. Click `Play` within Xcode
+4. Add plyer configuration to project
+```
+toolchain build plyer
+toolchain update contractflow-ios
+```
+
+5. Click `Play` within Xcode
